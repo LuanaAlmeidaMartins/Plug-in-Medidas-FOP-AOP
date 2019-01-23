@@ -14,7 +14,7 @@ public class Dependency {
 		this.dependencias = dependencias;
 	}
 
-	public String newClassName() {
+	public String getNewClassName() {
 		return newClassName;
 	}
 	

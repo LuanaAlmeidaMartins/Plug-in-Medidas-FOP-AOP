@@ -14,9 +14,9 @@ import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-
 import plugin.persistences.Dependency;
 
 public class DependencyVisitor extends ASTVisitor {
@@ -60,7 +60,7 @@ public class DependencyVisitor extends ASTVisitor {
 
 		return true;
 	}
-
+	
 	@Override
 	public boolean visit(MethodDeclaration node) {
 		for (Object o : node.parameters()) {
@@ -74,6 +74,15 @@ public class DependencyVisitor extends ASTVisitor {
 		}
 		return true;
 	}
+	
+	@Override
+	public boolean visit(MethodInvocation node) {
+		if(!dependencias.contains(node.resolveMethodBinding().getDeclaringClass().getName())) {
+			dependencias.add(node.resolveMethodBinding().getDeclaringClass().getName());
+		}
+		return true;
+	}
+	
 
 	@Override
 	public boolean visit(ClassInstanceCreation node) {
@@ -87,7 +96,7 @@ public class DependencyVisitor extends ASTVisitor {
 	public IType getClazz() {
 		return clazz;
 	}
-	
+		
 	public ArrayList<Dependency> getDependency() {
 		return dp;
 	}

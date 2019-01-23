@@ -1,3 +1,0 @@
-view MUST model
-controller CANNOT awt
-controller CAN util

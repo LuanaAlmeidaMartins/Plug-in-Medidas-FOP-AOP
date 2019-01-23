@@ -19,6 +19,9 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 import plugin.ast.DependencyVisitor;
 import plugin.metrics.ConsernSensitiveCouplingCSC;
+import plugin.metrics.CyclicalDependencyCD;
+import plugin.metrics.LackOfConcernBasedCohesionLCC;
+import plugin.metrics.NumberOfSharedOperationsNSO;
 import plugin.persistences.Dependency;
 import plugin.persistences.StatusConversa;
 import plugin.sst.CodeFragments;
@@ -63,7 +66,10 @@ public class SampleHandler extends AbstractHandler {
 			
 			// Metrics
 			new ConsernSensitiveCouplingCSC(fragments.getCodeFragments());
-
+			new NumberOfSharedOperationsNSO(fragments.getCodeFragments());
+			new CyclicalDependencyCD(fragments.getCodeFragments());
+			new LackOfConcernBasedCohesionLCC(fragments.getCodeFragments());
+			
 			openView();
 
 		} catch (JavaModelException e) {

@@ -30,7 +30,7 @@ public class CodeFragments {
 		for (Entry<String, ArrayList<Dependency>> entry : featuresFull.entrySet()) {
 			System.out.println("\n\nFEATURE: " + entry.getKey());
 			for (int i = 0; i < entry.getValue().size(); i++) {
-				System.out.println("CLASSE: " + entry.getValue().get(i).getClasseName());
+				System.out.println("CLASSE: " + entry.getValue().get(i).getNewClassName());
 				System.out.println("DP: " + Arrays.toString(entry.getValue().get(i).getDependencias().toArray()));
 			}
 		}
@@ -48,13 +48,14 @@ public class CodeFragments {
 					for (int k = 0; k < classesDependencias.size(); k++) {
 						if (code.get(i).getJakFiles().get(j)
 								.equals(classesDependencias.get(k).getClasse().getElementName())) {
-							classesDependencias.get(k).setNewClassName(completeName);
+							classesDependencias.get(k).setNewClassName(code.get(i).getJakFiles().get(j));
 							classes.add(classesDependencias.get(k));
 						}
 					}
 				} else {
 					for (int k = 0; k < classesDependencias.size(); k++) {
 						if (completeName.equals(classesDependencias.get(k).getClasse().getElementName())) {
+							classesDependencias.get(k).setNewClassName(code.get(i).getJakFiles().get(j));
 							classes.add(classesDependencias.get(k));
 						}
 					}
@@ -67,6 +68,7 @@ public class CodeFragments {
 					if (code.get(i).getJavaFiles().get(j)
 							.equals(classesDependencias.get(k).getClasse().getElementName())) {
 						classes.add(classesDependencias.get(k));
+						classesDependencias.get(k).setNewClassName(code.get(i).getJavaFiles().get(j));
 					}
 				}
 			}
