@@ -2,6 +2,7 @@ package plugin.persistences;
 
 import java.util.ArrayList;
 import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaModelException;
 
 public class Dependency {
 	
@@ -32,5 +33,9 @@ public class Dependency {
 	
 	public String getClasseName(){
 		return classe.getElementName();
+	}
+	
+	public int getNumberOfOperations() throws JavaModelException {
+		return classe.getMethods().length;
 	}
 }

@@ -23,7 +23,7 @@ public class LackOfConcernBasedCohesionLCC {
 		System.out
 		.println("******************************* Lack Of Concern Based Cohesion *******************************");
 		for (int i = 0; i < metricLCC.size(); i++) {
-			System.out.println(metricLCC.get(i).getFeatureName() + "   " + metricLCC.get(i).getMetricValueInt());
+			System.out.println(metricLCC.get(i).getFeatureName() + "   " + metricLCC.get(i).getMetricValue());
 		}
 		
 	}
@@ -52,7 +52,7 @@ public class LackOfConcernBasedCohesionLCC {
 				}
 				
 			}
-			metricLCC.add(new MetricsInformation(components.get(i), featuresUse.size()));
+		//	metricLCC.add(new MetricsInformation(components.get(i), featuresUse.size()));
 		}
 	}
 	

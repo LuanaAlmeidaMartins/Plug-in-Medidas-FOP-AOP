@@ -1,5 +1,7 @@
 package plugin.handlers;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -18,11 +20,14 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import plugin.ast.DependencyVisitor;
-import plugin.metrics.ConsernSensitiveCouplingCSC;
+import plugin.metrics.ConcernSensitiveCouplingCSC;
 import plugin.metrics.CyclicalDependencyCD;
 import plugin.metrics.LackOfConcernBasedCohesionLCC;
+import plugin.metrics.Metrics;
+import plugin.metrics.NumberOfOperationsNOO;
 import plugin.metrics.NumberOfSharedOperationsNSO;
 import plugin.persistences.Dependency;
+import plugin.persistences.MetricsInformation;
 import plugin.persistences.StatusConversa;
 import plugin.sst.CodeFragments;
 import plugin.sst.CodeStructure;
@@ -38,15 +43,13 @@ public class SampleHandler extends AbstractHandler {
 	public static ExecutionEvent event;
 	public static IJavaProject javaProject;
 	private ArrayList<Dependency> classesDependencias;
-	
-	public static ArrayList<StatusConversa> status;
-	public static ArrayList<StatusConversa> recomendacoes;
+
+	public static ArrayList<MetricsInformation> recomendacoes;
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException   {
 		classesDependencias = new ArrayList<Dependency>();
-		recomendacoes = new ArrayList<StatusConversa>();
-		status = new ArrayList<StatusConversa>();
+		recomendacoes = new ArrayList<MetricsInformation>();
 		
 		try {
 			SampleHandler.event = event;
@@ -65,12 +68,28 @@ public class SampleHandler extends AbstractHandler {
 			CodeFragments fragments = new CodeFragments(code.getCode(), classesDependencias);
 			
 			// Metrics
-			new ConsernSensitiveCouplingCSC(fragments.getCodeFragments());
-			new NumberOfSharedOperationsNSO(fragments.getCodeFragments());
-			new CyclicalDependencyCD(fragments.getCodeFragments());
-			new LackOfConcernBasedCohesionLCC(fragments.getCodeFragments());
+			ConcernSensitiveCouplingCSC csc = new ConcernSensitiveCouplingCSC(fragments.getCodeFragments());
+			CyclicalDependencyCD cd = new CyclicalDependencyCD(fragments.getCodeFragments());
+			NumberOfOperationsNOO no = new NumberOfOperationsNOO(fragments.getCodeFragments());
+			NumberOfSharedOperationsNSO nso = new NumberOfSharedOperationsNSO(fragments.getCodeFragments());
 			
-			openView();
+			recomendacoes.addAll(csc.getMetrics());
+			recomendacoes.addAll(cd.getMetrics());
+			recomendacoes.addAll(no.getMetrics());
+			recomendacoes.addAll(nso.getMetrics());
+			
+			for(int i = 0; i < recomendacoes.size(); i++) {
+				System.out.println("\n\n\n"+recomendacoes.get(i).getFeatureName());
+				for(int j = 0; j < recomendacoes.get(i).getChildren().size();j++) {
+					System.out.print(recomendacoes.get(i).getChildren().get(j).getFeatureName()+"   ");
+				}
+				
+			}
+			
+//			new CyclicalDependencyCD(fragments.getCodeFragments());
+//			new LackOfConcernBasedCohesionLCC(fragments.getCodeFragments());
+//			
+		openView();
 
 		} catch (JavaModelException e) {
 			e.printStackTrace();

@@ -7,25 +7,19 @@ import java.util.Map.Entry;
 import plugin.persistences.Dependency;
 import plugin.persistences.MetricsInformation;
 
-public class NumberOfSharedOperationsNSO {
-	private HashMap<String, ArrayList<Dependency>> code;
-	private ArrayList<MetricsInformation> metricNSO = new ArrayList<MetricsInformation>();
+public class NumberOfSharedOperationsNSO extends Metrics {
 
 	public NumberOfSharedOperationsNSO(HashMap<String, ArrayList<Dependency>> code) {
-		this.code = code;
+		super(code);
+		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();
-		print();
+		metricSystem.add(
+				new MetricsInformation("Number of Shared Operations (NSO)", 
+						metricFeature, Node.NON_LEAF, Propagation.AVERAGE));
 	}
 
-	private void print() {
-		System.out
-				.println("******************************* Number of Shared Operations *******************************");
-		for (int i = 0; i < metricNSO.size(); i++) {
-			System.out.println(metricNSO.get(i).getFeatureName() + "   " + metricNSO.get(i).getMetricValueInt());
-		}
-	}
 
-	private void calculate() {
+	public void calculate() {
 
 		for (Entry<String, ArrayList<Dependency>> feat1 : code.entrySet()) {
 			ArrayList<String> classesFromFeatures = new ArrayList<>();
@@ -63,7 +57,7 @@ public class NumberOfSharedOperationsNSO {
 					}
 				}
 			}
-			metricNSO.add(new MetricsInformation(feat1.getKey(), contarDP.size()));
+			metricFeature.add(new MetricsInformation(feat1.getKey(), contarDP.size(), Node.LEAF));
 		}
 	}
 }
