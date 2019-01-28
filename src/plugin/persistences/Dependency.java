@@ -5,12 +5,12 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 
 public class Dependency {
-	
+
 	private String newClassName;
 	private IType classe;
 	private ArrayList<String> dependencias;
-	
-	public Dependency(IType classe, ArrayList<String> dependencias){
+
+	public Dependency(IType classe, ArrayList<String> dependencias) {
 		this.classe = classe;
 		this.dependencias = dependencias;
 	}
@@ -18,7 +18,7 @@ public class Dependency {
 	public String getNewClassName() {
 		return newClassName;
 	}
-	
+
 	public void setNewClassName(String name) {
 		this.newClassName = name;
 	}
@@ -30,12 +30,8 @@ public class Dependency {
 	public ArrayList<String> getDependencias() {
 		return dependencias;
 	}
-	
-	public String getClasseName(){
+
+	public String getClasseName() {
 		return classe.getElementName();
-	}
-	
-	public int getNumberOfOperations() throws JavaModelException {
-		return classe.getMethods().length;
 	}
 }

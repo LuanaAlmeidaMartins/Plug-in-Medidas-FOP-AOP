@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class FileInformation {
 	
 	private String featureName;
-	private ArrayList<String> javaFiles;
-	private ArrayList<String> jakFiles;
+	private ArrayList<String> javaFiles = new ArrayList<>();
+	private ArrayList<String> jakFiles = new ArrayList<>();
 	
 	public FileInformation(String featureName, ArrayList<String> javaFiles, ArrayList<String>jakfiles) {
 		this.featureName = featureName;

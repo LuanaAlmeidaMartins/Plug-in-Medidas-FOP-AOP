@@ -23,7 +23,9 @@ import plugin.ast.DependencyVisitor;
 import plugin.metrics.ConcernSensitiveCouplingCSC;
 import plugin.metrics.CyclicalDependencyCD;
 import plugin.metrics.LackOfConcernBasedCohesionLCC;
+import plugin.metrics.LinesOfCodeLOC;
 import plugin.metrics.Metrics;
+import plugin.metrics.NumberOfAttributesNA;
 import plugin.metrics.NumberOfOperationsNOO;
 import plugin.metrics.NumberOfSharedOperationsNSO;
 import plugin.persistences.Dependency;
@@ -70,25 +72,20 @@ public class SampleHandler extends AbstractHandler {
 			// Metrics
 			ConcernSensitiveCouplingCSC csc = new ConcernSensitiveCouplingCSC(fragments.getCodeFragments());
 			CyclicalDependencyCD cd = new CyclicalDependencyCD(fragments.getCodeFragments());
+			LinesOfCodeLOC loc = new LinesOfCodeLOC(fragments.getCodeFragments());
+			NumberOfAttributesNA na = new NumberOfAttributesNA(fragments.getCodeFragments());
 			NumberOfOperationsNOO no = new NumberOfOperationsNOO(fragments.getCodeFragments());
 			NumberOfSharedOperationsNSO nso = new NumberOfSharedOperationsNSO(fragments.getCodeFragments());
+			LackOfConcernBasedCohesionLCC lcc = new LackOfConcernBasedCohesionLCC(fragments.getCodeFragments());
 			
 			recomendacoes.addAll(csc.getMetrics());
 			recomendacoes.addAll(cd.getMetrics());
+			recomendacoes.addAll(loc.getMetrics());
+			recomendacoes.addAll(na.getMetrics());
 			recomendacoes.addAll(no.getMetrics());
 			recomendacoes.addAll(nso.getMetrics());
+			recomendacoes.addAll(lcc.getMetrics());
 			
-			for(int i = 0; i < recomendacoes.size(); i++) {
-				System.out.println("\n\n\n"+recomendacoes.get(i).getFeatureName());
-				for(int j = 0; j < recomendacoes.get(i).getChildren().size();j++) {
-					System.out.print(recomendacoes.get(i).getChildren().get(j).getFeatureName()+"   ");
-				}
-				
-			}
-			
-//			new CyclicalDependencyCD(fragments.getCodeFragments());
-//			new LackOfConcernBasedCohesionLCC(fragments.getCodeFragments());
-//			
 		openView();
 
 		} catch (JavaModelException e) {

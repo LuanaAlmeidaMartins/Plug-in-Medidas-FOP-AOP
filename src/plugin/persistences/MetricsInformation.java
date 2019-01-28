@@ -29,9 +29,9 @@ public class MetricsInformation {
 			sum += components.get(i).getMetric();
 		}
 		if(propagation.equals(Propagation.AVERAGE)) {
-//			if(components.size()==0) {
-//				return 0;
-//			}
+			if(components.size()==0) {
+				return 0;
+			}
 			return sum / components.size();
 		}
 		return sum;
@@ -63,10 +63,18 @@ public class MetricsInformation {
 	}
 
 	public String getMetricValue() {
+		Number value;                               
 		if (type.equals(Node.LEAF)) {
 			return String.valueOf(metricValue);
 		}
-		float result = new BigDecimal(metricValueF).setScale(2, RoundingMode.HALF_UP).floatValue();
-		return String.valueOf(result);
+		else {
+			if(metricValueF == Math.rint(metricValueF)) {
+				value = (int) metricValueF; 
+				return String.valueOf(value);
+			} else {                
+				float result = new BigDecimal(metricValueF).setScale(2, RoundingMode.HALF_UP).floatValue();    
+				return String.valueOf(result);
+			}   
+		}
 	}
 }

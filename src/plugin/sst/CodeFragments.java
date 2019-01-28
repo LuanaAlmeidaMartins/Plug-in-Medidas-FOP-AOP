@@ -88,4 +88,12 @@ public class CodeFragments {
 	public HashMap<String, ArrayList<Dependency>> getCodeFragments() {
 		return featuresFull;
 	}
+	
+	public ArrayList<FileInformation> getCode() {
+		return code;
+	}
+	
+	public ArrayList<Dependency> getDep() {
+		return classesDependencias;
+	}
 }
