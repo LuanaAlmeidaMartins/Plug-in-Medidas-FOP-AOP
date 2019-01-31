@@ -67,6 +67,9 @@ public class MetricsInformation {
 		if (type.equals(Node.LEAF)) {
 			return String.valueOf(metricValue);
 		}
+		if(propagation.equals(Propagation.NONE)) {
+			return "";
+		}
 		else {
 			if(metricValueF == Math.rint(metricValueF)) {
 				value = (int) metricValueF; 

@@ -13,22 +13,11 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
-import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.NameQualifiedType;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.SuperFieldAccess;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.eclipse.jdt.core.dom.VariableDeclaration;
-import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
-
-import com.sun.javafx.fxml.expression.VariableExpression;
-
 import plugin.persistences.Dependency;
 import plugin.persistences.DependencyMethod;
 
@@ -63,24 +52,21 @@ public class DependencyVisitor extends ASTVisitor {
 		dependencias = new ArrayList<String>();
 		clazz = (IType) node.resolveBinding().getJavaElement();
 		dp.add(new Dependency(clazz, dependencias));
-		System.out.println("Class name: "+ node.resolveBinding().getName());
+		// System.out.println("Class name: "+ node.resolveBinding().getName());
 		return true;
 	}
 
 	@Override
 	public boolean visit(FieldDeclaration node) {
-		
 		if (!dependencias.contains(node.getType().resolveBinding().getName()) && !node.getType().isPrimitiveType()) {
 				dependencias.add(node.getType().resolveBinding().getName());
-				System.out.println("FieldDeclaration "+node.getType().toString());
 		} 
-
 		return true;
 	}
 	
 	@Override
 	public boolean visit(MethodDeclaration node) {
-		System.out.println("Method name: "+node.getName());
+		// System.out.println("Method name: "+node.getName());
 		for (Object o : node.parameters()) {
 			if (o instanceof SingleVariableDeclaration) {
 				SingleVariableDeclaration svd = (SingleVariableDeclaration) o;
@@ -92,36 +78,29 @@ public class DependencyVisitor extends ASTVisitor {
 		}
 		return true;
 	}
-
-	@Override
-	public boolean visit(VariableDeclarationFragment node) {
-		System.out.println("variable declaration: "+node.resolveBinding().getName());
-		return true;
-	}
 	
 	@Override
 	public boolean visit(Assignment node) {
 //		System.out.println("assigment : "+node.resolveTypeBinding().getJavaElement().getElementName());
-		System.out.println("-- : "+node.getLeftHandSide());
+	//	System.out.println("-- : "+node.getLeftHandSide());
 		return true;
 	}
 
 	@Override
 	public boolean visit(MethodInvocation node) {
-		System.out.println("Method invo: "+node.resolveMethodBinding().getModifiers());
+		//System.out.println("Method invo: "+node.resolveMethodBinding().getName());
 		if(!dependencias.contains(node.resolveMethodBinding().getDeclaringClass().getName())) {
 			dependencias.add(node.resolveMethodBinding().getDeclaringClass().getName());
 		}
 		return true;
 	}
-	
 
 	@Override
 	public boolean visit(ClassInstanceCreation node) {
 		if (!dependencias.contains(node.getType().resolveBinding().getName()) && !node.getType().isPrimitiveType()) {
 		//	System.out.println("ClassInstanceCreation "+node.getType().resolveBinding().getName());
 			dependencias.add(node.getType().resolveBinding().getName());
-			System.out.println("Class used name: "+node.getType().resolveBinding().getName());
+		// System.out.println("Class used name: "+node.getType().resolveBinding().getName());
 		}
 		return true;
 	}
