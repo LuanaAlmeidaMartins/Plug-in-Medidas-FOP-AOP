@@ -7,9 +7,9 @@ import java.util.Map.Entry;
 import plugin.persistences.Dependency;
 import plugin.persistences.MetricsInformation;
 
-public class ConcernSensitiveCouplingCSC extends Metrics {
+public class CSC_ConcernSensitiveCoupling extends Metrics {
 
-	public ConcernSensitiveCouplingCSC(HashMap<String, ArrayList<Dependency>> codeFragments) {
+	public CSC_ConcernSensitiveCoupling(HashMap<String, ArrayList<Dependency>> codeFragments) {
 		super(codeFragments);
 		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();

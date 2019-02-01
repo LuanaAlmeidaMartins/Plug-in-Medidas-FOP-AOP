@@ -7,9 +7,9 @@ import java.util.Map.Entry;
 import plugin.persistences.Dependency;
 import plugin.persistences.MetricsInformation;
 
-public class NumberOfSharedOperationsNSO extends Metrics {
+public class NSO_NumberOfSharedOperations extends Metrics {
 
-	public NumberOfSharedOperationsNSO(HashMap<String, ArrayList<Dependency>> code) {
+	public NSO_NumberOfSharedOperations(HashMap<String, ArrayList<Dependency>> code) {
 		super(code);
 		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();

@@ -7,9 +7,9 @@ import java.util.Map.Entry;
 import plugin.persistences.Dependency;
 import plugin.persistences.MetricsInformation;
 
-public class LackOfCohesionInMethodsLCO extends Metrics{
+public class LCO_LackOfCohesionInMethods extends Metrics{
 
-	public LackOfCohesionInMethodsLCO(HashMap<String, ArrayList<Dependency>> codeFragments) {
+	public LCO_LackOfCohesionInMethods(HashMap<String, ArrayList<Dependency>> codeFragments) {
 		super(codeFragments);
 		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();

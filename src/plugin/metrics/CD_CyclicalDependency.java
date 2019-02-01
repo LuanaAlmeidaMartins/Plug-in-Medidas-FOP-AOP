@@ -7,9 +7,9 @@ import java.util.Map.Entry;
 import plugin.persistences.Dependency;
 import plugin.persistences.MetricsInformation;
 
-public class CyclicalDependencyCD extends Metrics {
+public class CD_CyclicalDependency extends Metrics {
 
-	public CyclicalDependencyCD(HashMap<String, ArrayList<Dependency>> code) {
+	public CD_CyclicalDependency(HashMap<String, ArrayList<Dependency>> code) {
 		super(code);
 		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();

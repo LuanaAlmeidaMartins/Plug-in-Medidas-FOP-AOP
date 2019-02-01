@@ -17,15 +17,19 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import plugin.ast.DependencyVisitor;
-import plugin.metrics.ConcernSensitiveCouplingCSC;
-import plugin.metrics.CyclicalDependencyCD;
-import plugin.metrics.ExternalRatioFeatureDependency_EFD;
+import plugin.metrics.CSC_ConcernSensitiveCoupling;
+import plugin.metrics.CD_CyclicalDependency;
+import plugin.metrics.DepIn_DependencyIn;
+import plugin.metrics.DepOut_DependencyOut;
+import plugin.metrics.EFD_ExternalRatioFeatureDependency;
+import plugin.metrics.IFD_InternalRatioFeatureDependency;
 import plugin.metrics.LackOfConcernBasedCohesionLCC;
-import plugin.metrics.LinesOfCodeLOC;
+import plugin.metrics.LOC_LinesOfCode;
 import plugin.metrics.Metrics;
-import plugin.metrics.NumberOfAttributesNA;
-import plugin.metrics.NumberOfOperationsNOO;
-import plugin.metrics.NumberOfSharedOperationsNSO;
+import plugin.metrics.NA_NumberOfAttributes;
+import plugin.metrics.NO_NumberOfOperations;
+import plugin.metrics.NSO_NumberOfSharedOperations;
+import plugin.metrics.SFC_StructuralFeatureCoupling;
 import plugin.persistences.Dependency;
 import plugin.persistences.MetricsInformation;
 import plugin.sst.CodeFragments;
@@ -92,32 +96,40 @@ public class SampleHandler extends AbstractHandler {
 	private void callMetrics(CodeFragments fragments) {
 		Metrics metric;
 		
-		metric = new ConcernSensitiveCouplingCSC(fragments.getCodeFragments());
+		metric = new CSC_ConcernSensitiveCoupling(fragments.getCodeFragments());
 		recomendacoes.addAll(metric.getMetrics());
 		
-		metric = new CyclicalDependencyCD(fragments.getCodeFragments());
+		metric = new CD_CyclicalDependency(fragments.getCodeFragments());
 		recomendacoes.addAll(metric.getMetrics());
 		
-		metric = new LinesOfCodeLOC(fragments.getCodeFragments());
+		metric = new LOC_LinesOfCode(fragments.getCodeFragments());
 		recomendacoes.addAll(metric.getMetrics());
 		
-		metric= new NumberOfAttributesNA(fragments.getCodeFragments());
+		metric= new NA_NumberOfAttributes(fragments.getCodeFragments());
 		recomendacoes.addAll(metric.getMetrics());
 		
 		try {
-			metric= new NumberOfOperationsNOO(fragments.getCodeFragments());
+			metric= new NO_NumberOfOperations(fragments.getCodeFragments());
 		} catch (JavaModelException e) {
 			e.printStackTrace();
 		}
 		recomendacoes.addAll(metric.getMetrics());
 		
-		metric= new NumberOfSharedOperationsNSO(fragments.getCodeFragments());
+		metric= new NSO_NumberOfSharedOperations(fragments.getCodeFragments());
 		recomendacoes.addAll(metric.getMetrics());
 		
 		metric= new LackOfConcernBasedCohesionLCC(fragments.getCodeFragments());
-		recomendacoes.addAll(metric.getMetrics());
+	//	recomendacoes.addAll(metric.getMetrics());
 		
-		metric = new ExternalRatioFeatureDependency_EFD(fragments.getCodeFragments());
+		metric = new EFD_ExternalRatioFeatureDependency(fragments.getCodeFragments());
+		
+		metric = new IFD_InternalRatioFeatureDependency(fragments.getCodeFragments());
+		
+		metric = new DepIn_DependencyIn(fragments.getCodeFragments());
+		
+		metric = new DepOut_DependencyOut(fragments.getCodeFragments());
+		
+		metric = new SFC_StructuralFeatureCoupling(fragments.getCodeFragments());
 	}
 
 	private void getDependencies(final IProject project) throws CoreException {

@@ -9,9 +9,9 @@ import org.eclipse.jdt.core.JavaModelException;
 import plugin.persistences.Dependency;
 import plugin.persistences.MetricsInformation;
 
-public class NumberOfOperationsNOO extends Metrics {
+public class NO_NumberOfOperations extends Metrics {
 
-	public NumberOfOperationsNOO(HashMap<String, ArrayList<Dependency>> code) throws JavaModelException {
+	public NO_NumberOfOperations(HashMap<String, ArrayList<Dependency>> code) throws JavaModelException {
 		super(code);
 		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();

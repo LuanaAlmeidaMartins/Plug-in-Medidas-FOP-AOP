@@ -32,6 +32,7 @@ public class CodeFragments {
 			for (int i = 0; i < entry.getValue().size(); i++) {
 				System.out.println("CLASSE: " + entry.getValue().get(i).getNewClassName());
 				System.out.println("DP: " + Arrays.toString(entry.getValue().get(i).getDependencias().toArray()));
+				System.out.println("METHODS "+ Arrays.toString(entry.getValue().get(i).getMethods().toArray()));
 			}
 		}
 	}
