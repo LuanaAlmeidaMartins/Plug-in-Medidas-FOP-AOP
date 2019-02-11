@@ -4,5 +4,9 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="/home/luana/Desenvolvimento/WebHelp/javafx-3.1.7.jar"/>
+	<classpathentry kind="lib" path="/home/luana/aspectj1.7/lib/org.aspectj.matcher.jar"/>
+	<classpathentry kind="lib" path="/home/luana/aspectj1.7/lib/aspectjweaver.jar"/>
+	<classpathentry kind="lib" path="/home/luana/aspectj1.7/lib/aspectjtools.jar"/>
+	<classpathentry kind="lib" path="/home/luana/aspectj1.7/lib/aspectjrt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

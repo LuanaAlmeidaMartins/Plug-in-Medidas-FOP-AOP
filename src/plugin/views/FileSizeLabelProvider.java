@@ -3,10 +3,8 @@ package plugin.views;
 import javax.swing.JTree;
 
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
-import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
-import org.eclipse.swt.graphics.Image;
 
 public class FileSizeLabelProvider extends LabelProvider implements IStyledLabelProvider {
 

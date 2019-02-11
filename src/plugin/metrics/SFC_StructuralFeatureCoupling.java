@@ -28,10 +28,10 @@ public class SFC_StructuralFeatureCoupling extends Metrics {
 			ArrayList<String> union = new ArrayList<>();
 			ArrayList<String> featureMethods = new ArrayList<>();
 			for (int i = 0; i < feature.getValue().size(); i++) {
-				for (int j = 0; j < feature.getValue().get(i).getMethods().size(); j++) {
-					if (!featureMethods.contains(feature.getValue().get(i).getMethods().get(j))) {
-						featureMethods.add(feature.getValue().get(i).getMethods().get(j));
-						union.add(feature.getValue().get(i).getMethods().get(j));
+				for (int j = 0; j < feature.getValue().get(i).getMethodsCalled().size(); j++) {
+					if (!featureMethods.contains(feature.getValue().get(i).getMethodsCalled().get(j))) {
+						featureMethods.add(feature.getValue().get(i).getMethodsCalled().get(j));
+						union.add(feature.getValue().get(i).getMethodsCalled().get(j));
 					}
 				}
 			}
@@ -40,13 +40,13 @@ public class SFC_StructuralFeatureCoupling extends Metrics {
 			for (Entry<String, ArrayList<Dependency>> feature2 : code.entrySet()) {
 				if (!feature2.getKey().equals(feature.getKey())) {
 					for (int i = 0; i < feature2.getValue().size(); i++) {
-						for (int j = 0; j < feature2.getValue().get(i).getMethods().size(); j++) {
-							if (!union.contains(feature2.getValue().get(i).getMethods().get(j))) {
-								union.add(feature2.getValue().get(i).getMethods().get(j));
+						for (int j = 0; j < feature2.getValue().get(i).getMethodsCalled().size(); j++) {
+							if (!union.contains(feature2.getValue().get(i).getMethodsCalled().get(j))) {
+								union.add(feature2.getValue().get(i).getMethodsCalled().get(j));
 							}
-							if (featureMethods.contains(feature2.getValue().get(i).getMethods().get(j))) {
-								if (!intersection.contains(feature2.getValue().get(i).getMethods().get(j))) {
-									intersection.add(feature2.getValue().get(i).getMethods().get(j));
+							if (featureMethods.contains(feature2.getValue().get(i).getMethodsCalled().get(j))) {
+								if (!intersection.contains(feature2.getValue().get(i).getMethodsCalled().get(j))) {
+									intersection.add(feature2.getValue().get(i).getMethodsCalled().get(j));
 								}
 							}
 						}

@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jface.text.Document;
-
 import plugin.persistences.Dependency;
 import plugin.persistences.MetricsInformation;
 
@@ -24,14 +21,11 @@ public class LOC_LinesOfCode extends Metrics {
 		for (Entry<String, ArrayList<Dependency>> feature : code.entrySet()) {
 			metricComponent = new ArrayList<MetricsInformation>();
 			for (int i = 0; i < feature.getValue().size(); i++) {
-				try {
-					Document doc = new Document(feature.getValue().get(i).getClasse().getSource());
-					metricComponent.add(
-							new MetricsInformation(feature.getValue().get(i).getNewClassName(), 
-									doc.getNumberOfLines(), Node.LEAF));
-				} catch (JavaModelException e) {
-					e.printStackTrace();
-				}
+				//	Document doc = new Document(feature.getValue().get(i).getClasse().getSource());
+				metricComponent.add(
+						new MetricsInformation(feature.getValue().get(i).getNewClassName(), 
+								feature.getValue().get(i).getNumberOfLines(),
+								Node.LEAF));
 				
 			}
 			metricFeature

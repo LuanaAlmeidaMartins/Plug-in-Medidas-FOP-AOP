@@ -18,6 +18,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import plugin.handlers.SampleHandler;
 import plugin.persistences.MetricsInformation;
+import plugin.persistences.ViewInformation;
 
 public class SampleView extends ViewPart {
 
@@ -27,8 +28,8 @@ public class SampleView extends ViewPart {
 
 	public void createPartControl(Composite parent) {
 		
-		String[] titles = { "Metric ", "Value"};
-		int[] bounds = {300, 150};
+		String[] titles = { "Metric ", "Feature Oriented", "Aspect Oriented", "Aspectual Feature Modules"};
+		int[] bounds = {200, 100, 100, 100};
 		
         viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
         viewer.setContentProvider(new TreeContentProvider());
@@ -40,7 +41,7 @@ public class SampleView extends ViewPart {
         mainColumn.setLabelProvider(new ColumnLabelProvider(){
         	@Override
 			public String getText(Object element) {
-        		MetricsInformation v = (MetricsInformation) element;
+        		ViewInformation v = (ViewInformation) element;
 				return v.getFeatureName();
 			}
         }
@@ -51,8 +52,28 @@ public class SampleView extends ViewPart {
         valueColumn.setLabelProvider(new ColumnLabelProvider(){
         	@Override
 			public String getText(Object element) {
-        		MetricsInformation v = (MetricsInformation) element;
-				return v.getMetricValue();
+        		ViewInformation v = (ViewInformation) element;
+				return v.getMetricJakarta();
+			}
+        }
+        );
+        
+        TreeViewerColumn valueColumn2 = createTableViewerColumn(titles[2], bounds[2], 2);  
+        valueColumn2.setLabelProvider(new ColumnLabelProvider(){
+        	@Override
+			public String getText(Object element) {
+        		ViewInformation v = (ViewInformation) element;
+				return v.getMetricAspectJ();
+			}
+        }
+        );
+        
+        TreeViewerColumn valueColumn3 = createTableViewerColumn(titles[3], bounds[3], 3);  
+        valueColumn3.setLabelProvider(new ColumnLabelProvider(){
+        	@Override
+			public String getText(Object element) {
+        		ViewInformation v = (ViewInformation) element;
+				return v.getMetricAfm();
 			}
         }
         );

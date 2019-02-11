@@ -46,6 +46,7 @@ public class CSC_ConcernSensitiveCoupling extends Metrics {
 						new MetricsInformation(entry.getValue().get(i).getNewClassName(), 0, Node.LEAF));
 				}
 			}
+			
 			metricFeature.add(new MetricsInformation(entry.getKey(), metricComponent, Node.NON_LEAF, Propagation.AVERAGE));
 		}
 	}

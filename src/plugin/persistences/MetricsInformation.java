@@ -9,13 +9,14 @@ import plugin.metrics.Propagation;
 
 public class MetricsInformation {
 	private String featureName;
-	private int metricValue;
-	private float metricValueF;
+	private int metricValue = 0;
+	private float metricValueF = 0;
 	private ArrayList<MetricsInformation> components = new ArrayList<>();
 	private Node type;
 	private Propagation propagation;
 
-	public MetricsInformation(String featureName, ArrayList<MetricsInformation> components, Node type, Propagation prop) {
+	public MetricsInformation(String featureName, ArrayList<MetricsInformation> components, 
+			Node type, Propagation prop) {
 		this.featureName = featureName;
 		this.components = components;
 		this.propagation = prop;
@@ -34,12 +35,23 @@ public class MetricsInformation {
 			}
 			return sum / components.size();
 		}
+		if(propagation.equals(Propagation.NONE)) {
+			sum = -1;
+		}
 		return sum;
 	}
 
-	public MetricsInformation(String featureName, int metricValue, Node type) {
+	public MetricsInformation(String featureName, Number metricValue, Node type) {
 		this.featureName = featureName;
-		this.metricValue = metricValue;
+		this.metricValue = metricValue.intValue();
+		this.type = type;
+	}
+	
+	public MetricsInformation(String featureName, Number metricValue, Number otherValue, Node type) {
+		this.featureName = featureName;
+		if(otherValue.floatValue() != 0) {
+			this.metricValueF = metricValue.floatValue()/otherValue.floatValue();
+		}
 		this.type = type;
 	}
 
@@ -64,10 +76,10 @@ public class MetricsInformation {
 
 	public String getMetricValue() {
 		Number value;                               
-		if (type.equals(Node.LEAF)) {
+		if (type.equals(Node.LEAF) && metricValueF==0) {
 			return String.valueOf(metricValue);
 		}
-		if(propagation.equals(Propagation.NONE)) {
+		if(metricValueF==-1) {
 			return "";
 		}
 		else {

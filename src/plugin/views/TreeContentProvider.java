@@ -6,13 +6,14 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import plugin.metrics.Node;
 import plugin.persistences.MetricsInformation;
+import plugin.persistences.ViewInformation;
 
 // Tutorial followed - http://www.vogella.com/tutorials/EclipseJFaceTree/article.html#prerequisites
 public class TreeContentProvider implements ITreeContentProvider {
 
 	@Override
 	public boolean hasChildren(Object element) {
-		MetricsInformation mi = (MetricsInformation) element;
+		ViewInformation mi = (ViewInformation) element;
 		if (mi.getType().equals(Node.LEAF)) {
 			return false;
 		}
@@ -31,8 +32,8 @@ public class TreeContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
-		MetricsInformation mi = (MetricsInformation) parentElement;
-		MetricsInformation[] stockArr = new MetricsInformation[mi.getChildren().size()];
+		ViewInformation mi = (ViewInformation) parentElement;
+		ViewInformation[] stockArr = new ViewInformation[mi.getChildren().size()];
 		stockArr = mi.getChildren().toArray(stockArr);
 		return stockArr;
 	}

@@ -23,13 +23,9 @@ public class NO_NumberOfOperations extends Metrics {
 		for (Entry<String, ArrayList<Dependency>> feature : code.entrySet()) {
 			metricComponent = new ArrayList<MetricsInformation>();
 			for (int i = 0; i < feature.getValue().size(); i++) {
-				try {
-					metricComponent.add(
-							new MetricsInformation(feature.getValue().get(i).getNewClassName(), 
-									feature.getValue().get(i).getClasse().getMethods().length, Node.LEAF));
-				} catch (JavaModelException e) {
-					e.printStackTrace();
-				}
+				metricComponent.add(
+						new MetricsInformation(feature.getValue().get(i).getNewClassName(), 
+								feature.getValue().get(i).getMethods(), Node.LEAF));
 			}
 			metricFeature.add(new MetricsInformation(feature.getKey(), metricComponent, Node.NON_LEAF, Propagation.SUM));
 		}

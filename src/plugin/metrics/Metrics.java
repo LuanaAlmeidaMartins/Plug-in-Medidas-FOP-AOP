@@ -3,8 +3,6 @@ package plugin.metrics;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.eclipse.jdt.core.JavaModelException;
-
 import plugin.persistences.Dependency;
 import plugin.persistences.MetricsInformation;
 

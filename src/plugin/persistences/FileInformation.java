@@ -14,6 +14,11 @@ public class FileInformation {
 		this.javaFiles = javaFiles;
 	}
 
+	public FileInformation(String featureName, ArrayList<String> javaFiles) {
+		this.javaFiles = javaFiles;
+		this.featureName = featureName;
+	}
+
 	public String getFeatureName() {
 		return featureName;
 	}

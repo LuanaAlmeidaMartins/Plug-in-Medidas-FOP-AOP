@@ -1,6 +1,8 @@
 package plugin.handlers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -16,7 +18,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import plugin.ast.DependencyVisitor;
+import plugin.ast.VisitorJava;
+import plugin.ast.VisitorAj;
 import plugin.metrics.CSC_ConcernSensitiveCoupling;
 import plugin.metrics.CD_CyclicalDependency;
 import plugin.metrics.DepIn_DependencyIn;
@@ -32,27 +35,29 @@ import plugin.metrics.NSO_NumberOfSharedOperations;
 import plugin.metrics.SFC_StructuralFeatureCoupling;
 import plugin.persistences.Dependency;
 import plugin.persistences.MetricsInformation;
+import plugin.persistences.MetricsView;
+import plugin.persistences.ViewInformation;
 import plugin.sst.CodeFragments;
 import plugin.sst.CodeStructure;
 import plugin.sst.XMLGenerator;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.text.Document;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
 public class SampleHandler extends AbstractHandler {
 
 	public static ExecutionEvent event;
-	public static IJavaProject javaProject;
 	private ArrayList<Dependency> classesDependencias;
 
-	public static ArrayList<MetricsInformation> recomendacoes;
+	public static ArrayList<ViewInformation> recomendacoes;
 	public static String jakLocation = null, aspectJLocation = null, afmLocation = null;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		classesDependencias = new ArrayList<Dependency>();
-		recomendacoes = new ArrayList<MetricsInformation>();
+		recomendacoes = new ArrayList<>();
 
 		SampleHandler.event = event;
 		Shell shell = HandlerUtil.getActiveWorkbenchWindow(event).getShell();
@@ -60,6 +65,7 @@ public class SampleHandler extends AbstractHandler {
 		hideView();
 
 		ProjectIdentification projectIdentification = new ProjectIdentification();
+		
 
 		// If there is no project in workspace
 		if (projectIdentification.getAllProjects().length == 0) {
@@ -73,7 +79,7 @@ public class SampleHandler extends AbstractHandler {
 					new ModalWindow(shell, projectIdentification));
 			wizardDialog.open();
 		}
-
+		
 		try {
 			// Jakarta project
 			IProject jakartaProject = projectIdentification.getProject(jakLocation);
@@ -81,9 +87,18 @@ public class SampleHandler extends AbstractHandler {
 			jakartaProject.refreshLocal(IResource.DEPTH_ZERO, null);
 			getDependencies(jakartaProject);
 			CodeStructure code = new CodeStructure(jakartaProject);
+			code.jakCodeStructure();
 			CodeFragments fragments = new CodeFragments(code.getCode(), classesDependencias);
-			callMetrics(fragments);
+			
+			IProject aspectJProject = projectIdentification.getProject(aspectJLocation);
+			getDependencies(aspectJProject);
+			CodeStructure aspectCode = new CodeStructure(aspectJProject); 
+			aspectCode.aspectCodeStructure();
+			CodeFragments fragmentsAj = new CodeFragments(aspectCode.getCode(), classesDependencias);
 
+			
+		MetricsView mv = new MetricsView(callMetrics(fragments), callMetrics(fragmentsAj), callMetrics(fragmentsAj));
+		recomendacoes = mv.getView();
 			openView();
 
 		} catch (CoreException e) {
@@ -93,43 +108,52 @@ public class SampleHandler extends AbstractHandler {
 		return null;
 	}
 
-	private void callMetrics(CodeFragments fragments) {
+	private ArrayList<MetricsInformation> callMetrics(CodeFragments fragments) {
+		ArrayList<MetricsInformation> metricsList = new ArrayList<MetricsInformation>();
 		Metrics metric;
 		
 		metric = new CSC_ConcernSensitiveCoupling(fragments.getCodeFragments());
-		recomendacoes.addAll(metric.getMetrics());
+		metricsList.addAll(metric.getMetrics());
 		
 		metric = new CD_CyclicalDependency(fragments.getCodeFragments());
-		recomendacoes.addAll(metric.getMetrics());
+		metricsList.addAll(metric.getMetrics());
 		
 		metric = new LOC_LinesOfCode(fragments.getCodeFragments());
-		recomendacoes.addAll(metric.getMetrics());
+		metricsList.addAll(metric.getMetrics());
 		
 		metric= new NA_NumberOfAttributes(fragments.getCodeFragments());
-		recomendacoes.addAll(metric.getMetrics());
+		metricsList.addAll(metric.getMetrics());
 		
 		try {
 			metric= new NO_NumberOfOperations(fragments.getCodeFragments());
 		} catch (JavaModelException e) {
 			e.printStackTrace();
 		}
-		recomendacoes.addAll(metric.getMetrics());
+		metricsList.addAll(metric.getMetrics());
 		
 		metric= new NSO_NumberOfSharedOperations(fragments.getCodeFragments());
-		recomendacoes.addAll(metric.getMetrics());
+		metricsList.addAll(metric.getMetrics());
 		
 		metric= new LackOfConcernBasedCohesionLCC(fragments.getCodeFragments());
-	//	recomendacoes.addAll(metric.getMetrics());
+	//	metricsList.addAll(metric.getMetrics());
+		metricsList.addAll(metric.getMetrics());
 		
 		metric = new EFD_ExternalRatioFeatureDependency(fragments.getCodeFragments());
+		metricsList.addAll(metric.getMetrics());
 		
 		metric = new IFD_InternalRatioFeatureDependency(fragments.getCodeFragments());
+		metricsList.addAll(metric.getMetrics());
 		
 		metric = new DepIn_DependencyIn(fragments.getCodeFragments());
+		metricsList.addAll(metric.getMetrics());
 		
 		metric = new DepOut_DependencyOut(fragments.getCodeFragments());
+		metricsList.addAll(metric.getMetrics());
 		
 		metric = new SFC_StructuralFeatureCoupling(fragments.getCodeFragments());
+		metricsList.addAll(metric.getMetrics());
+		
+		return metricsList;
 	}
 
 	private void getDependencies(final IProject project) throws CoreException {
@@ -140,7 +164,13 @@ public class SampleHandler extends AbstractHandler {
 				if (resource instanceof IFile && resource.getLocation().toString().contains("src")
 						&& resource.getName().endsWith(".java")) {
 					ICompilationUnit unit = ((ICompilationUnit) JavaCore.create((IFile) resource));
-					DependencyVisitor dp = new DependencyVisitor(unit);
+					VisitorJava dp = new VisitorJava(unit);
+					classesDependencias.addAll(dp.getDependency());
+				}
+				if (resource instanceof IFile && resource.getName().endsWith(".aj")) {
+					ICompilationUnit unit = ((ICompilationUnit) JavaCore.create((IFile) resource));
+					Document doc = new Document(unit.getSource());
+					VisitorAj dp = new VisitorAj(doc.get());		
 					classesDependencias.addAll(dp.getDependency());
 				}
 				return true;

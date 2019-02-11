@@ -2,11 +2,15 @@ package plugin.sst;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 
 import plugin.persistences.FileInformation;
@@ -22,11 +26,6 @@ public class CodeStructure {
 
 	public CodeStructure(IProject iProject) {
 		this.project = iProject;
-		try {
-			codeStructure();
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public ArrayList<FileInformation> getCode() {
@@ -37,7 +36,7 @@ public class CodeStructure {
 	 * The components are separated into: .java files and .jak files. After, they
 	 * are associated to a feature.
 	 */
-	private void codeStructure() throws CoreException {
+	public void jakCodeStructure() throws CoreException {
 		project.accept(new IResourceVisitor() {
 
 			@Override
@@ -66,5 +65,26 @@ public class CodeStructure {
 				return true;
 			}
 		});
+	}
+
+	public void aspectCodeStructure() throws JavaModelException {
+		IJavaProject javaProject = JavaCore.create(project);
+		IPackageFragment[] packages = javaProject.getPackageFragments();
+		for (IPackageFragment mypackage : packages) {
+			if (mypackage.getKind() == IPackageFragmentRoot.K_SOURCE) {
+				String featureName = mypackage.getElementName();
+				ArrayList<String> javaFiles = new ArrayList<String>();
+				for (ICompilationUnit unit : mypackage.getCompilationUnits()) {
+					String arrayLine[] = new String[2];
+					arrayLine = unit.getElementName().split("\\.");
+					if (arrayLine[1].equals("java") || arrayLine[1].equals("aj")) {
+						if (!javaFiles.contains(arrayLine[0])) {
+							javaFiles.add(arrayLine[0]);
+						}
+					}	
+				}
+					code.add(new FileInformation(featureName, javaFiles));
+			}
+		}
 	}
 }

@@ -58,8 +58,8 @@ public class EFD_ExternalRatioFeatureDependency extends Metrics {
 			System.out.println("All dependencies: " + allDependencies);
 			System.out.println("Internal dependencies: " + internalDependencies);
 			System.out.println("EFD: " + (float) internalDependencies / allDependencies);
-			// metricFeature.add(new MetricsInformation(feature.getKey(), metricComponent,
-			// Node.NON_LEAF, Propagation.AVERAGE));
+			metricFeature.add(new MetricsInformation(feature.getKey(), internalDependencies, 
+					allDependencies,Node.LEAF));
 		}
 
 	}

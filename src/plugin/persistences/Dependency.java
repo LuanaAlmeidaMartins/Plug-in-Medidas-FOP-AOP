@@ -1,19 +1,21 @@
 package plugin.persistences;
 
 import java.util.ArrayList;
-import org.eclipse.jdt.core.IType;
 
 public class Dependency {
 
 	private String newClassName;
-	private IType classe;
+	private String classe;
 	private ArrayList<String> dependencias;
-	private ArrayList<String> methods;
+	private ArrayList<String> methodsCalled;
+	private int lines = 0;
+	private int attributes = 0;
+	private int methods = 0;
 
-	public Dependency(IType classe, ArrayList<String> dependencias, ArrayList<String> methods) {
+	public Dependency(String classe, ArrayList<String> dependencias, ArrayList<String> methods) {
 		this.classe = classe;
 		this.dependencias = dependencias;
-		this.methods = methods;
+		this.methodsCalled = methods;
 	}
 
 	public String getNewClassName() {
@@ -24,19 +26,41 @@ public class Dependency {
 		this.newClassName = name;
 	}
 
-	public IType getClasse() {
-		return classe;
-	}
 
 	public ArrayList<String> getDependencias() {
 		return dependencias;
 	}
 
 	public String getClasseName() {
-		return classe.getElementName();
+		return classe;
 	}
 	
-	public ArrayList<String> getMethods() {
+	public ArrayList<String> getMethodsCalled() {
+		return methodsCalled;
+	}
+	
+	public void setNumberOfLines(int lines) {
+		this.lines  = lines;
+	}
+	
+	public int getNumberOfLines() {
+		return lines;
+	}
+
+	public int getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(int attributes) {
+		this.attributes = attributes;
+	}
+
+	public int getMethods() {
 		return methods;
 	}
+
+	public void setMethods(int methods) {
+		this.methods = methods;
+	}
+	
 }
