@@ -5,10 +5,10 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import plugin.metrics.Node;
-import plugin.persistences.MetricsInformation;
 import plugin.persistences.ViewInformation;
 
-// Tutorial followed - http://www.vogella.com/tutorials/EclipseJFaceTree/article.html#prerequisites
+// Tutorial 
+// http://www.vogella.com/tutorials/EclipseJFaceTree/article.html#prerequisites
 public class TreeContentProvider implements ITreeContentProvider {
 
 	@Override

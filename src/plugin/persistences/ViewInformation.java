@@ -7,8 +7,8 @@ import plugin.metrics.Node;
 public class ViewInformation {
 	private String featureName;
 	private String metricJakarta = "-";
-	private String metricAspectJ="-";
-	private String metricAfm="-";
+	private String metricAspectJ = "-";
+	private String metricAfm = "-";
 	private ArrayList<ViewInformation> components = new ArrayList<>();
 	private Node type;
 
@@ -16,7 +16,7 @@ public class ViewInformation {
 		this.featureName = featureName;
 		this.type = type;
 	}
-	
+
 	public ViewInformation(String featureName, Node type, ArrayList<ViewInformation> components) {
 		this.featureName = featureName;
 		this.type = type;
@@ -62,11 +62,11 @@ public class ViewInformation {
 	public void setComponents(ArrayList<ViewInformation> components) {
 		this.components = components;
 	}
-	
+
 	public Node getType() {
 		return type;
 	}
-	
+
 	public ArrayList<ViewInformation> getChildren() {
 		return components;
 	}

@@ -26,8 +26,8 @@ public class IFD_InternalRatioFeatureDependency extends Metrics {
 			// get components of the feature
 			ArrayList<String> featureComponents = new ArrayList<>();
 			for (int i = 0; i < feature.getValue().size(); i++) {
-				if (!featureComponents.contains(feature.getValue().get(i).getNewClassName())) {
-					featureComponents.add(feature.getValue().get(i).getNewClassName());
+				if (!featureComponents.contains(feature.getValue().get(i).getClasseName())) {
+					featureComponents.add(feature.getValue().get(i).getClasseName());
 				}
 			}
 
@@ -37,20 +37,16 @@ public class IFD_InternalRatioFeatureDependency extends Metrics {
 
 					// if dependency is internal
 					for (int j = 0; j < featureComponents.size(); j++) {
-						if (feature.getValue().get(i).getDependencias().get(k).contains(featureComponents.get(j))) {
+						if (feature.getValue().get(i).getDependencias().get(k).equals(featureComponents.get(j))) {
 							internalDependencies++;
 						}
 					}
 				}
 
 			}
-			System.out.println("\n\nFEATURE: " + feature.getKey());
-			System.out.println("All elements: " + featureComponents.size());
-			System.out.println("Internal dependencies: " + internalDependencies);
-			System.out.println(
-					"IFD: " + (float) internalDependencies / (featureComponents.size() * featureComponents.size()));
-			// metricFeature.add(new MetricsInformation(feature.getKey(), metricComponent,
-			// Node.NON_LEAF, Propagation.AVERAGE));
+
+			metricFeature.add(new MetricsInformation(feature.getKey(), internalDependencies,
+					featureComponents.size() * featureComponents.size(), Node.LEAF));
 		}
 
 	}

@@ -22,10 +22,9 @@ public class NA_NumberOfAttributes extends Metrics {
 		for (Entry<String, ArrayList<Dependency>> feature : code.entrySet()) {
 			metricComponent = new ArrayList<MetricsInformation>();
 			for (int i = 0; i < feature.getValue().size(); i++) {
-				metricComponent.add(
-						new MetricsInformation(feature.getValue().get(i).getNewClassName(), 
-								feature.getValue().get(i).getAttributes(), Node.LEAF));
-				
+				metricComponent.add(new MetricsInformation(feature.getValue().get(i).getClasseName(),
+						feature.getValue().get(i).getAttributes(), Node.LEAF));
+
 			}
 			metricFeature
 					.add(new MetricsInformation(feature.getKey(), metricComponent, Node.NON_LEAF, Propagation.SUM));

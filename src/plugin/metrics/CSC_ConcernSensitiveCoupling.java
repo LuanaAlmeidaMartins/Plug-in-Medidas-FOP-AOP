@@ -13,8 +13,8 @@ public class CSC_ConcernSensitiveCoupling extends Metrics {
 		super(codeFragments);
 		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();
-		metricSystem.add(
-				new MetricsInformation("Concern Sensitive Coupling (CSC)", metricFeature, Node.NON_LEAF, Propagation.AVERAGE));
+		metricSystem.add(new MetricsInformation("Concern Sensitive Coupling (CSC)", metricFeature, Node.NON_LEAF,
+				Propagation.AVERAGE));
 	}
 
 	public void calculate() {
@@ -26,28 +26,28 @@ public class CSC_ConcernSensitiveCoupling extends Metrics {
 				ArrayList<String> dependencies = new ArrayList<>();
 
 				for (int i = 0; i < entry.getValue().size(); i++) {
-					dependencies.add(entry.getValue().get(i).getNewClassName());
+					dependencies.add(entry.getValue().get(i).getClasseName());
 				}
 				for (int i = 0; i < entry.getValue().size(); i++) {
 					contarDP = 0;
 					for (int j = 0; j < dependencies.size(); j++) {
-						if (entry.getValue().get(i).getNewClassName() != dependencies.get(j)) {
+						if (entry.getValue().get(i).getClasseName() != dependencies.get(j)) {
 							if (entry.getValue().get(i).getDependencias().contains(dependencies.get(j))) {
 								contarDP++;
 							}
 						}
 					}
-					metricComponent.add(
-							new MetricsInformation(entry.getValue().get(i).getNewClassName(), contarDP, Node.LEAF));
+					metricComponent
+							.add(new MetricsInformation(entry.getValue().get(i).getClasseName(), contarDP, Node.LEAF));
 				}
 			} else {
 				for (int i = 0; i < entry.getValue().size(); i++) {
-				metricComponent.add(
-						new MetricsInformation(entry.getValue().get(i).getNewClassName(), 0, Node.LEAF));
+					metricComponent.add(new MetricsInformation(entry.getValue().get(i).getClasseName(), 0, Node.LEAF));
 				}
 			}
-			
-			metricFeature.add(new MetricsInformation(entry.getKey(), metricComponent, Node.NON_LEAF, Propagation.AVERAGE));
+
+			metricFeature
+					.add(new MetricsInformation(entry.getKey(), metricComponent, Node.NON_LEAF, Propagation.AVERAGE));
 		}
 	}
 }

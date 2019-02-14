@@ -29,8 +29,8 @@ public class EFD_ExternalRatioFeatureDependency extends Metrics {
 			// get components of the feature
 			ArrayList<String> featureComponents = new ArrayList<>();
 			for (int i = 0; i < feature.getValue().size(); i++) {
-				if (!featureComponents.contains(feature.getValue().get(i).getNewClassName())) {
-					featureComponents.add(feature.getValue().get(i).getNewClassName());
+				if (!featureComponents.contains(feature.getValue().get(i).getClasseName())) {
+					featureComponents.add(feature.getValue().get(i).getClasseName());
 				}
 			}
 
@@ -40,26 +40,22 @@ public class EFD_ExternalRatioFeatureDependency extends Metrics {
 					for (int j = 0; j < allComponents.size(); j++) {
 
 						// if dependency is internal or external
-						if (feature.getValue().get(i).getDependencias().get(k).contains(allComponents.get(j))) {
+						if (feature.getValue().get(i).getDependencias().get(k).equals(allComponents.get(j))) {
 							allDependencies++;
 						}
 					}
 
 					// if dependency is internal
 					for (int j = 0; j < featureComponents.size(); j++) {
-						if (feature.getValue().get(i).getDependencias().get(k).contains(featureComponents.get(j))) {
+						if (feature.getValue().get(i).getDependencias().get(k).equals(featureComponents.get(j))) {
 							internalDependencies++;
 						}
 					}
 				}
 
 			}
-			System.out.println("\n\nFEATURE: " + feature.getKey());
-			System.out.println("All dependencies: " + allDependencies);
-			System.out.println("Internal dependencies: " + internalDependencies);
-			System.out.println("EFD: " + (float) internalDependencies / allDependencies);
-			metricFeature.add(new MetricsInformation(feature.getKey(), internalDependencies, 
-					allDependencies,Node.LEAF));
+			metricFeature
+					.add(new MetricsInformation(feature.getKey(), internalDependencies, allDependencies, Node.LEAF));
 		}
 
 	}
@@ -68,8 +64,8 @@ public class EFD_ExternalRatioFeatureDependency extends Metrics {
 		ArrayList<String> allComponents = new ArrayList<>();
 		for (Entry<String, ArrayList<Dependency>> feature : code.entrySet()) {
 			for (int i = 0; i < feature.getValue().size(); i++) {
-				if (!allComponents.contains(feature.getValue().get(i).getNewClassName())) {
-					allComponents.add(feature.getValue().get(i).getNewClassName());
+				if (!allComponents.contains(feature.getValue().get(i).getClasseName())) {
+					allComponents.add(feature.getValue().get(i).getClasseName());
 				}
 			}
 		}

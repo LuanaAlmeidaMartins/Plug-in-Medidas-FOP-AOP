@@ -1,13 +1,12 @@
 package plugin.persistences;
 
-
 public class StatusConversa {
 	String classeA;
 	String classeB;
 	int tipoDependencia;
 	String pacoteA;
 	String pacoteB;
-	
+
 	public StatusConversa(String pacoteA, String pacoteB, int tipoDependencia) {
 		this.pacoteA = pacoteA;
 		this.pacoteB = pacoteB;
@@ -21,7 +20,7 @@ public class StatusConversa {
 		this.pacoteB = pacoteB;
 		this.tipoDependencia = tipoDependencia;
 	}
-	
+
 	public String getPacoteA() {
 		return pacoteA;
 	}

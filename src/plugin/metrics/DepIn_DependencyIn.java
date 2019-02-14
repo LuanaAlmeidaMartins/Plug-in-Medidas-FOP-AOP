@@ -13,8 +13,8 @@ public class DepIn_DependencyIn extends Metrics {
 		super(code);
 		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();
-		metricSystem.add(new MetricsInformation("Dependency In (DepIn)", metricFeature, Node.NON_LEAF,
-				Propagation.NONE));
+		metricSystem
+				.add(new MetricsInformation("Dependency In (DepIn)", metricFeature, Node.NON_LEAF, Propagation.NONE));
 	}
 
 	@Override
@@ -25,19 +25,20 @@ public class DepIn_DependencyIn extends Metrics {
 			// get components of the feature
 			ArrayList<String> featureComponents = new ArrayList<>();
 			for (int i = 0; i < feature.getValue().size(); i++) {
-				if (!featureComponents.contains(feature.getValue().get(i).getNewClassName())) {
-					featureComponents.add(feature.getValue().get(i).getNewClassName());
+				if (!featureComponents.contains(feature.getValue().get(i).getClasseName())) {
+					featureComponents.add(feature.getValue().get(i).getClasseName());
 				}
 			}
-			
+
 			// check if the components is used by other features
 			for (Entry<String, ArrayList<Dependency>> feature2 : code.entrySet()) {
-				if(!feature.getKey().equals(feature2.getKey())){
-					for(int i = 0; i < feature2.getValue().size();i++) {
-						for(int j = 0; j < feature2.getValue().get(i).getDependencias().size();j++) {
+				if (!feature.getKey().equals(feature2.getKey())) {
+					for (int i = 0; i < feature2.getValue().size(); i++) {
+						for (int j = 0; j < feature2.getValue().get(i).getDependencias().size(); j++) {
 							for (int k = 0; k < featureComponents.size(); k++) {
-								if (feature2.getValue().get(i).getDependencias().get(j).contains(featureComponents.get(k))) {
-									if(!usedByFeatures.contains(feature2.getKey())) {
+								if (feature2.getValue().get(i).getDependencias().get(j)
+										.contains(featureComponents.get(k))) {
+									if (!usedByFeatures.contains(feature2.getKey())) {
 										usedByFeatures.add(feature2.getKey());
 									}
 								}
@@ -46,9 +47,7 @@ public class DepIn_DependencyIn extends Metrics {
 					}
 				}
 			}
-			System.out.println("\n\nFEATURE: " + feature.getKey());
-			System.out.println("DepIn: " + usedByFeatures.size());
+			metricFeature.add(new MetricsInformation(feature.getKey(), usedByFeatures.size(), Node.LEAF));
 		}
 	}
 }
-

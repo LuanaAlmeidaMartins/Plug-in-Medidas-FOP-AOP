@@ -13,7 +13,8 @@ public class CD_CyclicalDependency extends Metrics {
 		super(code);
 		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();
-		metricSystem.add(new MetricsInformation("Cyclical Dependencies (CD)", metricFeature, Node.NON_LEAF, Propagation.SUM));
+		metricSystem.add(
+				new MetricsInformation("Cyclical Dependencies (CD)", metricFeature, Node.NON_LEAF, Propagation.SUM));
 	}
 
 	public void calculate() {
@@ -24,10 +25,9 @@ public class CD_CyclicalDependency extends Metrics {
 				for (int i = 0; i < entry.getValue().size() - 1; i++) {
 
 					for (int j = 1; j < entry.getValue().size(); j++) {
-						if (entry.getValue().get(i).getDependencias()
-								.contains(entry.getValue().get(j).getNewClassName())
+						if (entry.getValue().get(i).getDependencias().contains(entry.getValue().get(j).getClasseName())
 								&& entry.getValue().get(j).getDependencias()
-										.contains(entry.getValue().get(i).getNewClassName())) {
+										.contains(entry.getValue().get(i).getClasseName())) {
 							contarDP++;
 						}
 					}

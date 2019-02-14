@@ -13,11 +13,9 @@ public class NSO_NumberOfSharedOperations extends Metrics {
 		super(code);
 		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();
-		metricSystem.add(
-				new MetricsInformation("Number of Shared Operations (NSO)", 
-						metricFeature, Node.NON_LEAF, Propagation.AVERAGE));
+		metricSystem.add(new MetricsInformation("Number of Shared Operations (NSO)", metricFeature, Node.NON_LEAF,
+				Propagation.AVERAGE));
 	}
-
 
 	public void calculate() {
 
@@ -27,7 +25,7 @@ public class NSO_NumberOfSharedOperations extends Metrics {
 
 			// Pegar nomes de classes da feature analisada
 			for (int i = 0; i < feat1.getValue().size(); i++) {
-				myClasses.add(feat1.getValue().get(i).getNewClassName());
+				myClasses.add(feat1.getValue().get(i).getClasseName());
 			}
 
 			// Pegar o nome das classes de outras features
@@ -36,8 +34,8 @@ public class NSO_NumberOfSharedOperations extends Metrics {
 				if (feat1.getKey() != feat2.getKey()) {
 					// coloca todos as classes de outros interesses numa lista
 					for (int i = 0; i < feat2.getValue().size(); i++) {
-						if (!classesFromFeatures.contains(feat2.getValue().get(i).getNewClassName())) {
-							classesFromFeatures.add(feat2.getValue().get(i).getNewClassName());
+						if (!classesFromFeatures.contains(feat2.getValue().get(i).getClasseName())) {
+							classesFromFeatures.add(feat2.getValue().get(i).getClasseName());
 						}
 					}
 
@@ -50,7 +48,7 @@ public class NSO_NumberOfSharedOperations extends Metrics {
 				for (int j = 0; j < classesFromFeatures.size(); j++) {
 					if (!myClasses.contains(classesFromFeatures.get(j))) {
 						if (feat1.getValue().get(i).getDependencias().contains(classesFromFeatures.get(j))) {
-							if(!contarDP.contains(classesFromFeatures.get(j))){
+							if (!contarDP.contains(classesFromFeatures.get(j))) {
 								contarDP.add(classesFromFeatures.get(j));
 							}
 						}

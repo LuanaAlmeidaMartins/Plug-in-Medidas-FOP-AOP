@@ -1,7 +1,6 @@
 package plugin.metrics;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -54,9 +53,7 @@ public class SFC_StructuralFeatureCoupling extends Metrics {
 				}
 
 			}
-			System.out.println("\n\nFeature: " + feature.getKey());
-			System.out.println("Intersection: " + Arrays.toString(intersection.toArray()));
-			System.out.println("Union: " + Arrays.toString(union.toArray()));
+			metricFeature.add(new MetricsInformation(feature.getKey(), intersection.size(), union.size(), Node.LEAF));
 		}
 
 	}

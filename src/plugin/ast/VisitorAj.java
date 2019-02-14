@@ -47,13 +47,12 @@ public class VisitorAj extends AjASTVisitor {
 		this.compilationUnit.accept(this);
 	}
 
-	
 	@Override
 	public boolean visit(TypeDeclaration node) {
 		dependencies = new ArrayList<String>();
 		methods = new ArrayList<String>();
-		
-		if(imported.size()>0) {
+
+		if (imported.size() > 0) {
 			dependencies.addAll(imported);
 		}
 		Document doc = new Document(node.toString());
@@ -86,7 +85,7 @@ public class VisitorAj extends AjASTVisitor {
 		if (!dependencies.contains(a)) {
 			dependencies.add(a);
 		}
-		
+
 		return true;
 	}
 
@@ -120,7 +119,7 @@ public class VisitorAj extends AjASTVisitor {
 				}
 			}
 		}
-		newDep.setMethods(newDep.getMethods()+1);
+		newDep.setMethods(newDep.getMethods() + 1);
 		return true;
 	}
 
@@ -137,7 +136,7 @@ public class VisitorAj extends AjASTVisitor {
 				}
 			}
 		}
-		newDep.setMethods(newDep.getMethods()+1);
+		newDep.setMethods(newDep.getMethods() + 1);
 		return true;
 	}
 
@@ -154,7 +153,7 @@ public class VisitorAj extends AjASTVisitor {
 				}
 			}
 		}
-		newDep.setMethods(newDep.getMethods()+1);
+		newDep.setMethods(newDep.getMethods() + 1);
 		return true;
 	}
 
@@ -171,7 +170,7 @@ public class VisitorAj extends AjASTVisitor {
 				}
 			}
 		}
-		newDep.setMethods(newDep.getMethods()+1);
+		newDep.setMethods(newDep.getMethods() + 1);
 		return true;
 	}
 
@@ -188,7 +187,7 @@ public class VisitorAj extends AjASTVisitor {
 				}
 			}
 		}
-		newDep.setMethods(newDep.getMethods()+1);
+		newDep.setMethods(newDep.getMethods() + 1);
 		return true;
 	}
 
@@ -221,8 +220,9 @@ public class VisitorAj extends AjASTVisitor {
 		}
 		return true;
 	}
-	
+
 	public ArrayList<Dependency> getDependency() {
+		imported = new ArrayList<>();
 		return dp;
 	}
 }

@@ -2,6 +2,7 @@ package plugin.sst;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
@@ -21,22 +22,20 @@ import plugin.persistences.FileInformation;
  */
 public class CodeStructure {
 
-	private ArrayList<FileInformation> code = new ArrayList<FileInformation>();
 	private IProject project;
 
 	public CodeStructure(IProject iProject) {
 		this.project = iProject;
 	}
 
-	public ArrayList<FileInformation> getCode() {
-		return code;
-	}
-
 	/**
 	 * The components are separated into: .java files and .jak files. After, they
 	 * are associated to a feature.
+	 * 
+	 * @return
 	 */
-	public void jakCodeStructure() throws CoreException {
+	public ArrayList<FileInformation> jakCodeStructure() throws CoreException {
+		ArrayList<FileInformation> code = new ArrayList<FileInformation>();
 		project.accept(new IResourceVisitor() {
 
 			@Override
@@ -65,9 +64,11 @@ public class CodeStructure {
 				return true;
 			}
 		});
+		return code;
 	}
 
-	public void aspectCodeStructure() throws JavaModelException {
+	public ArrayList<FileInformation> aspectCodeStructure() throws JavaModelException {
+		ArrayList<FileInformation> code = new ArrayList<FileInformation>();
 		IJavaProject javaProject = JavaCore.create(project);
 		IPackageFragment[] packages = javaProject.getPackageFragments();
 		for (IPackageFragment mypackage : packages) {
@@ -81,10 +82,39 @@ public class CodeStructure {
 						if (!javaFiles.contains(arrayLine[0])) {
 							javaFiles.add(arrayLine[0]);
 						}
-					}	
+					}
 				}
-					code.add(new FileInformation(featureName, javaFiles));
+				code.add(new FileInformation(featureName, javaFiles));
 			}
 		}
+		for (int i = 0; i < code.size(); i++) {
+			if (code.get(i).getFeatureName().isEmpty()) {
+				code.remove(i);
+			}
+		}
+		return code;
+	}
+
+	public ArrayList<FileInformation> afmCodeStructure() throws CoreException {
+		ArrayList<FileInformation> jakCode = jakCodeStructure();
+		ArrayList<FileInformation> ajCode = aspectCodeStructure();
+		ArrayList<String> aux = new ArrayList<String>();
+
+		for (int i = 0; i < ajCode.size(); i++) {
+			aux.add(ajCode.get(i).getFeatureName());
+		}
+
+		for (int j = 0; j < jakCode.size(); j++) {
+			for (int i = 0; i < ajCode.size(); i++) {
+				if (ajCode.get(i).getFeatureName().equals(jakCode.get(j).getFeatureName())) {
+					ajCode.get(i).setJakFiles(jakCode.get(j).getJakFiles());
+					ajCode.get(i).setJavaFiles(jakCode.get(j).getJavaFiles());
+				}
+			}
+			if ((!aux.contains(jakCode.get(j).getFeatureName())) && (!ajCode.contains(jakCode.get(j)))) {
+				ajCode.add(jakCode.get(j));
+			}
+		}
+		return ajCode;
 	}
 }

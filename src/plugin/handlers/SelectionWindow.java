@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Text;
 
 public class SelectionWindow extends WizardPage {
 
+	// Tutorial
 	// http://www.vogella.com/tutorials/EclipseWizards/article.html#wizards
 
 	private Composite container;

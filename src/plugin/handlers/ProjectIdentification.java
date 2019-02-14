@@ -28,7 +28,7 @@ public class ProjectIdentification {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private IProject[] getProjectsFromWorkspace() {
 		// Get the root of the workspace
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -86,12 +86,12 @@ public class ProjectIdentification {
 
 	private String[] convert(ArrayList<IProject> list) {
 		String[] names = new String[list.size()];
-		for(int i = 0; i < list.size();i++) {
+		for (int i = 0; i < list.size(); i++) {
 			names[i] = list.get(i).getName();
 		}
 		return names;
 	}
-	
+
 	public String[] getListAFM() {
 		return convert(listAFM);
 	}
@@ -103,14 +103,14 @@ public class ProjectIdentification {
 	public String[] getListJakarta() {
 		return convert(listJakarta);
 	}
-	
+
 	public IProject[] getAllProjects() {
 		return projects;
 	}
 
 	public IProject getProject(String nameProject) {
-		for(IProject project : projects) {
-			if(project.getName().equals(nameProject)) {
+		for (IProject project : projects) {
+			if (project.getName().equals(nameProject)) {
 				return project;
 			}
 		}

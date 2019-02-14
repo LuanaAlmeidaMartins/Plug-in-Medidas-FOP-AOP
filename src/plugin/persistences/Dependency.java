@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Dependency {
 
-	private String newClassName;
 	private String classe;
 	private ArrayList<String> dependencias;
 	private ArrayList<String> methodsCalled;
@@ -18,14 +17,9 @@ public class Dependency {
 		this.methodsCalled = methods;
 	}
 
-	public String getNewClassName() {
-		return newClassName;
-	}
-
 	public void setNewClassName(String name) {
-		this.newClassName = name;
+		this.classe = name;
 	}
-
 
 	public ArrayList<String> getDependencias() {
 		return dependencias;
@@ -34,15 +28,15 @@ public class Dependency {
 	public String getClasseName() {
 		return classe;
 	}
-	
+
 	public ArrayList<String> getMethodsCalled() {
 		return methodsCalled;
 	}
-	
+
 	public void setNumberOfLines(int lines) {
-		this.lines  = lines;
+		this.lines = lines;
 	}
-	
+
 	public int getNumberOfLines() {
 		return lines;
 	}
@@ -62,5 +56,5 @@ public class Dependency {
 	public void setMethods(int methods) {
 		this.methods = methods;
 	}
-	
+
 }

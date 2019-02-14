@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.part.ViewPart;
 
 import plugin.handlers.SampleHandler;
-import plugin.persistences.MetricsInformation;
 import plugin.persistences.ViewInformation;
 
 public class SampleView extends ViewPart {
@@ -28,8 +27,9 @@ public class SampleView extends ViewPart {
 
 	public void createPartControl(Composite parent) {
 		
-		String[] titles = { "Metric ", "Feature Oriented", "Aspect Oriented", "Aspectual Feature Modules"};
-		int[] bounds = {200, 100, 100, 100};
+		String[] titles = { "Metric ", "Values to Feature Oriented", 
+				"Values to  Aspect Oriented", "Values to Aspectual Feature Modules"};
+		int[] bounds = {300, 200, 200, 200};
 		
         viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
         viewer.setContentProvider(new TreeContentProvider());
@@ -115,7 +115,7 @@ public class SampleView extends ViewPart {
 	}
 
 	private TreeViewerColumn createTableViewerColumn(String title, int bound, final int colNumber) {
-		final TreeViewerColumn viewerColumn = new TreeViewerColumn(viewer, SWT.NONE);
+		final TreeViewerColumn viewerColumn = new TreeViewerColumn(viewer, SWT.CENTER | SWT.WRAP);
 		final TreeColumn column = viewerColumn.getColumn();
 		column.setText(title);
 		column.setWidth(bound);

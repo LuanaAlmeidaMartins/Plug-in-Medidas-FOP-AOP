@@ -15,8 +15,8 @@ public class MetricsInformation {
 	private Node type;
 	private Propagation propagation;
 
-	public MetricsInformation(String featureName, ArrayList<MetricsInformation> components, 
-			Node type, Propagation prop) {
+	public MetricsInformation(String featureName, ArrayList<MetricsInformation> components, Node type,
+			Propagation prop) {
 		this.featureName = featureName;
 		this.components = components;
 		this.propagation = prop;
@@ -29,13 +29,13 @@ public class MetricsInformation {
 		for (int i = 0; i < components.size(); i++) {
 			sum += components.get(i).getMetric();
 		}
-		if(propagation.equals(Propagation.AVERAGE)) {
-			if(components.size()==0) {
+		if (propagation.equals(Propagation.AVERAGE)) {
+			if (components.size() == 0) {
 				return 0;
 			}
 			return sum / components.size();
 		}
-		if(propagation.equals(Propagation.NONE)) {
+		if (propagation.equals(Propagation.NONE)) {
 			sum = -1;
 		}
 		return sum;
@@ -46,11 +46,11 @@ public class MetricsInformation {
 		this.metricValue = metricValue.intValue();
 		this.type = type;
 	}
-	
+
 	public MetricsInformation(String featureName, Number metricValue, Number otherValue, Node type) {
 		this.featureName = featureName;
-		if(otherValue.floatValue() != 0) {
-			this.metricValueF = metricValue.floatValue()/otherValue.floatValue();
+		if (otherValue.floatValue() != 0) {
+			this.metricValueF = metricValue.floatValue() / otherValue.floatValue();
 		}
 		this.type = type;
 	}
@@ -75,21 +75,20 @@ public class MetricsInformation {
 	}
 
 	public String getMetricValue() {
-		Number value;                               
-		if (type.equals(Node.LEAF) && metricValueF==0) {
+		Number value;
+		if (type.equals(Node.LEAF) && metricValueF == 0) {
 			return String.valueOf(metricValue);
 		}
-		if(metricValueF==-1) {
-			return "";
-		}
-		else {
-			if(metricValueF == Math.rint(metricValueF)) {
-				value = (int) metricValueF; 
+		if (metricValueF == -1) {
+			return "--";
+		} else {
+			if (metricValueF == Math.rint(metricValueF)) {
+				value = (int) metricValueF;
 				return String.valueOf(value);
-			} else {                
-				float result = new BigDecimal(metricValueF).setScale(2, RoundingMode.HALF_UP).floatValue();    
+			} else {
+				float result = new BigDecimal(metricValueF).setScale(2, RoundingMode.HALF_UP).floatValue();
 				return String.valueOf(result);
-			}   
+			}
 		}
 	}
 }

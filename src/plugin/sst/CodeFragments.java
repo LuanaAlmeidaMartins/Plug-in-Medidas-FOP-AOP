@@ -15,37 +15,29 @@ public class CodeFragments {
 	private ArrayList<String> classesNames = new ArrayList<>();
 	private ArrayList<Dependency> classes;
 	private HashMap<String, ArrayList<Dependency>> featuresFull = new HashMap<String, ArrayList<Dependency>>();
-	
 
 	public CodeFragments(ArrayList<FileInformation> code, ArrayList<Dependency> classesDependencias) {
 		this.code = code;
-		for (int i = 0; i < this.code.size(); i++) {		
-			if(this.code.get(i).getFeatureName().isEmpty()) {
-				this.code.remove(i);
-			}
-		}
 		this.classesDependencias = classesDependencias;
 		classesFromSource();
 		searchFilesIntoSource();
 		print();
 	}
 
-
-	
-
 	// Printing code fragments
 	private void print() {
 		for (Entry<String, ArrayList<Dependency>> entry : featuresFull.entrySet()) {
 			System.out.println("\n\nFEATURE: " + entry.getKey());
 			for (int i = 0; i < entry.getValue().size(); i++) {
-				System.out.println("CLASSE: " + entry.getValue().get(i).getNewClassName());
+				System.out.println("CLASSE: " + entry.getValue().get(i).getClasseName());
 				System.out.println("DP: " + Arrays.toString(entry.getValue().get(i).getDependencias().toArray()));
-				System.out.println("METHODS "+ Arrays.toString(entry.getValue().get(i).getMethodsCalled().toArray()));
+				System.out.println("METHODS " + Arrays.toString(entry.getValue().get(i).getMethodsCalled().toArray()));
 			}
 		}
 	}
 
-	// Searching the jak and java files from "features" package into "default" package
+	// Searching the jak and java files from "features" package into "default"
+	// package
 	private void searchFilesIntoSource() {
 		for (int i = 0; i < code.size(); i++) {
 			classes = new ArrayList<>();
@@ -55,8 +47,7 @@ public class CodeFragments {
 				String completeName = code.get(i).getJakFiles().get(j).concat("$$" + code.get(i).getFeatureName());
 				if (!classesNames.contains(completeName)) {
 					for (int k = 0; k < classesDependencias.size(); k++) {
-						if (code.get(i).getJakFiles().get(j)
-								.equals(classesDependencias.get(k).getClasseName())) {
+						if (code.get(i).getJakFiles().get(j).equals(classesDependencias.get(k).getClasseName())) {
 							classesDependencias.get(k).setNewClassName(code.get(i).getJakFiles().get(j));
 							classes.add(classesDependencias.get(k));
 						}
@@ -70,18 +61,17 @@ public class CodeFragments {
 					}
 				}
 			}
-			
+
 			// java files
 			for (int j = 0; j < code.get(i).getJavaFiles().size(); j++) {
 				for (int k = 0; k < classesDependencias.size(); k++) {
-					if (code.get(i).getJavaFiles().get(j)
-							.equals(classesDependencias.get(k).getClasseName())) {
+					if (code.get(i).getJavaFiles().get(j).equals(classesDependencias.get(k).getClasseName())) {
 						classes.add(classesDependencias.get(k));
 						classesDependencias.get(k).setNewClassName(code.get(i).getJavaFiles().get(j));
 					}
 				}
 			}
-			
+
 			featuresFull.put(code.get(i).getFeatureName(), classes);
 		}
 	}
@@ -97,11 +87,11 @@ public class CodeFragments {
 	public HashMap<String, ArrayList<Dependency>> getCodeFragments() {
 		return featuresFull;
 	}
-	
+
 	public ArrayList<FileInformation> getCode() {
 		return code;
 	}
-	
+
 	public ArrayList<Dependency> getDep() {
 		return classesDependencias;
 	}
