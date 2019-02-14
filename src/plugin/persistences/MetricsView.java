@@ -72,79 +72,79 @@ public class MetricsView {
 								nonLeaf.add(vi);
 								nonString.add(vi.getFeatureName());
 							}
-						} else {
+						}
+						// Leaf files with different names
+						else {
 							// aspectJ only
-							if (!nameJak.contains(aj.get(j).getFeatureName())) {
-								if (!nameAfm.contains(aj.get(j).getFeatureName())) {
-									ViewInformation vi = new ViewInformation(aj.get(j).getFeatureName(),
-											aj.get(j).getType());
-									vi.setMetricAspectJ(aj.get(j).getMetricValue());
-									if (!nonString.contains(vi.getFeatureName())) {
-										nonLeaf.add(vi);
-										nonString.add(vi.getFeatureName());
-									}
+							if ((!nameJak.contains(aj.get(j).getFeatureName()))
+									&& (!nameAfm.contains(aj.get(j).getFeatureName()))) {
+								ViewInformation vi = new ViewInformation(aj.get(j).getFeatureName(),
+										aj.get(j).getType());
+								vi.setMetricAspectJ(aj.get(j).getMetricValue());
+								if (!nonString.contains(vi.getFeatureName())) {
+									nonLeaf.add(vi);
+									nonString.add(vi.getFeatureName());
 								}
-								// aspectJ and Afm
-								else {
-									ViewInformation vi = new ViewInformation(aj.get(j).getFeatureName(),
-											aj.get(j).getType());
-									vi.setMetricAspectJ(aj.get(j).getMetricValue());
-									vi.setMetricAfm(afm.get(k).getMetricValue());
-									if (!nonString.contains(vi.getFeatureName())) {
-										nonLeaf.add(vi);
-										nonString.add(vi.getFeatureName());
-									}
+							}
+							// aspectJ and Afm
+							if ((!nameJak.contains(aj.get(j).getFeatureName()))
+									&& (nameAfm.contains(aj.get(j).getFeatureName()))) {
+								ViewInformation vi = new ViewInformation(aj.get(j).getFeatureName(),
+										aj.get(j).getType());
+								vi.setMetricAspectJ(aj.get(j).getMetricValue());
+								vi.setMetricAfm(afm.get(k).getMetricValue());
+								if (!nonString.contains(vi.getFeatureName())) {
+									nonLeaf.add(vi);
+									nonString.add(vi.getFeatureName());
 								}
-
+							}
+							// aspectJ and Jak
+							if ((nameJak.contains(aj.get(j).getFeatureName()))
+									&& (!nameAfm.contains(aj.get(j).getFeatureName()))) {
+								ViewInformation vi = new ViewInformation(aj.get(j).getFeatureName(),
+										aj.get(j).getType());
+								vi.setMetricAspectJ(aj.get(j).getMetricValue());
+								vi.setMetricJakarta(jak.get(i).getMetricValue());
+								if (!nonString.contains(vi.getFeatureName())) {
+									nonLeaf.add(vi);
+									nonString.add(vi.getFeatureName());
+								}
 							}
 							// Jakarta only
-							if (!nameAJ.contains(jak.get(i).getFeatureName())) {
-								if (!nameAfm.contains(jak.get(i).getFeatureName())) {
-									ViewInformation vi = new ViewInformation(jak.get(i).getFeatureName(),
-											jak.get(i).getType());
-									vi.setMetricJakarta(jak.get(i).getMetricValue());
-									if (!nonString.contains(vi.getFeatureName())) {
-										nonLeaf.add(vi);
-										nonString.add(vi.getFeatureName());
-									}
-								}
-								// Jakarta and AFM
-								else {
-									ViewInformation vi = new ViewInformation(jak.get(i).getFeatureName(),
-											jak.get(i).getType());
-									vi.setMetricJakarta(jak.get(i).getMetricValue());
-									vi.setMetricAfm(afm.get(k).getMetricValue());
-									if (!nonString.contains(vi.getFeatureName())) {
-										nonLeaf.add(vi);
-										nonString.add(vi.getFeatureName());
-									}
+							if ((!nameAJ.contains(jak.get(i).getFeatureName()))
+									&& (!nameAfm.contains(jak.get(i).getFeatureName()))) {
+								ViewInformation vi = new ViewInformation(jak.get(i).getFeatureName(),
+										jak.get(i).getType());
+								vi.setMetricJakarta(jak.get(i).getMetricValue());
+								if (!nonString.contains(vi.getFeatureName())) {
+									nonLeaf.add(vi);
+									nonString.add(vi.getFeatureName());
 								}
 							}
-
-							// AFM only
-							if (!nameAJ.contains(afm.get(k).getFeatureName())) {
-								if (!nameJak.contains(afm.get(k).getFeatureName())) {
-									ViewInformation vi = new ViewInformation(afm.get(k).getFeatureName(),
-											afm.get(k).getType());
-									vi.setMetricAfm(afm.get(k).getMetricValue());
-									if (!nonString.contains(vi.getFeatureName())) {
-										nonLeaf.add(vi);
-										nonString.add(vi.getFeatureName());
-									}
+							// Jakarta and AFM
+							if ((!nameAJ.contains(jak.get(i).getFeatureName()))
+									&& (nameAfm.contains(jak.get(i).getFeatureName()))) {
+								ViewInformation vi = new ViewInformation(jak.get(i).getFeatureName(),
+										jak.get(i).getType());
+								vi.setMetricJakarta(jak.get(i).getMetricValue());
+								vi.setMetricAfm(afm.get(k).getMetricValue());
+								if (!nonString.contains(vi.getFeatureName())) {
+									nonLeaf.add(vi);
+									nonString.add(vi.getFeatureName());
 								}
-								if (nameAJ.contains(jak.get(i).getFeatureName())) {
-									ViewInformation vi = new ViewInformation(jak.get(i).getFeatureName(),
-											jak.get(i).getType());
-									vi.setMetricJakarta(jak.get(i).getMetricValue());
-									vi.setMetricAspectJ(aj.get(j).getMetricValue());
-									if (!nonString.contains(vi.getFeatureName())) {
-										nonLeaf.add(vi);
-										nonString.add(vi.getFeatureName());
-									}
+							}
+							// AFM only
+							if ((!nameAJ.contains(afm.get(k).getFeatureName()))
+									&& (!nameJak.contains(afm.get(k).getFeatureName()))) {
+								ViewInformation vi = new ViewInformation(afm.get(k).getFeatureName(),
+										afm.get(k).getType());
+								vi.setMetricAfm(afm.get(k).getMetricValue());
+								if (!nonString.contains(vi.getFeatureName())) {
+									nonLeaf.add(vi);
+									nonString.add(vi.getFeatureName());
 								}
 							}
 						}
-
 					}
 				}
 			}
