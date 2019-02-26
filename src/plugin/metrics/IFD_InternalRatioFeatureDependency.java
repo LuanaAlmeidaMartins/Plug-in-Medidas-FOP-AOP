@@ -38,13 +38,14 @@ public class IFD_InternalRatioFeatureDependency extends Metrics {
 					// if dependency is internal
 					for (int j = 0; j < featureComponents.size(); j++) {
 						if (feature.getValue().get(i).getDependencias().get(k).equals(featureComponents.get(j))) {
+							
 							internalDependencies++;
 						}
 					}
 				}
 
 			}
-
+//			System.out.println("contu "+feature.getKey() + "  "+ internalDependencies + "  "+ featureComponents);
 			metricFeature.add(new MetricsInformation(feature.getKey(), internalDependencies,
 					featureComponents.size() * featureComponents.size(), Node.LEAF));
 		}

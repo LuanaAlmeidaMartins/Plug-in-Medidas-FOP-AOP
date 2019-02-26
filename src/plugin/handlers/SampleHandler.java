@@ -81,28 +81,39 @@ public class SampleHandler extends AbstractHandler {
 			// Jakarta project
 			classesDependencias = new ArrayList<Dependency>();
 			IProject jakartaProject = projectIdentification.getProject(jakLocation);
-			new XMLGenerator(jakartaProject);
+			XMLGenerator xml = new XMLGenerator(jakartaProject);
 			jakartaProject.refreshLocal(IResource.DEPTH_ZERO, null);
 			getDependencies(jakartaProject);
+			System.out.println(classesDependencias.size()+" ------ ???");
 			CodeStructure code = new CodeStructure(jakartaProject);
 			CodeFragments fragments = new CodeFragments(code.jakCodeStructure(), classesDependencias);
-
+			fragments.jak();
+	//		xml.undo();
+			jakartaProject.refreshLocal(IResource.DEPTH_ZERO, null);
+			
 			// AspectJ project
 			classesDependencias = new ArrayList<Dependency>();
 			IProject aspectJProject = projectIdentification.getProject(aspectJLocation);
 			getDependencies(aspectJProject);
 			CodeStructure aspectCode = new CodeStructure(aspectJProject);
 			CodeFragments fragmentsAj = new CodeFragments(aspectCode.aspectCodeStructure(), classesDependencias);
+			fragmentsAj.aspect();
 
 			// Aspectual Feature Modules project
 			classesDependencias = new ArrayList<Dependency>();
 			IProject afmProject = projectIdentification.getProject(afmLocation);
+			XMLGenerator xmlAfm = new XMLGenerator(afmProject);
+			afmProject.refreshLocal(IResource.DEPTH_ZERO, null);
 			getDependencies(afmProject);
 			CodeStructure afmCode = new CodeStructure(afmProject);
-			CodeFragments fragmentsAfm = new CodeFragments(afmCode.afmCodeStructure(), classesDependencias);
-
-			MetricsView mv = new MetricsView(callMetrics(fragments), callMetrics(fragmentsAj),
-					callMetrics(fragmentsAfm));
+			CodeFragments fragmentsAfm = new CodeFragments(afmCode.jakCodeStructure(), classesDependencias);
+			fragmentsAfm.jak();
+			xmlAfm.undo();
+			afmProject.refreshLocal(IResource.DEPTH_ZERO, null);
+			
+			MetricsView mv = new MetricsView(callMetrics(fragments), 
+					callMetrics(fragments),
+					callMetrics(fragments));
 			recomendacoes = mv.getView();
 			openView();
 
@@ -165,13 +176,16 @@ public class SampleHandler extends AbstractHandler {
 
 			@Override
 			public boolean visit(IResource resource) throws JavaModelException {
+				System.out.println(resource.getLocation().toString());
 				if (resource instanceof IFile && resource.getLocation().toString().contains("src")
 						&& resource.getName().endsWith(".java")) {
+					System.out.println("here");
 					ICompilationUnit unit = ((ICompilationUnit) JavaCore.create((IFile) resource));
 					VisitorJava dp = new VisitorJava(unit);
 					classesDependencias.addAll(dp.getDependency());
 				}
-				if (resource instanceof IFile && resource.getName().endsWith(".aj")) {
+				if (resource instanceof IFile && resource.getLocation().toString().contains("src")
+						&& resource instanceof IFile && resource.getName().endsWith(".aj")) {
 					ICompilationUnit unit = ((ICompilationUnit) JavaCore.create((IFile) resource));
 					Document doc = new Document(unit.getSource());
 					VisitorAj dp = new VisitorAj(doc.get());

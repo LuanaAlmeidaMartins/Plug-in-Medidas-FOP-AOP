@@ -24,6 +24,7 @@ public class VisitorJava extends ASTVisitor {
 	private CompilationUnit compilationUnit;
 	private ArrayList<String> dependencies, methods;
 	private ArrayList<Dependency> dp;
+	int i = 0;
 
 	public VisitorJava(ICompilationUnit unit) throws JavaModelException {
 		dp = new ArrayList<Dependency>();
@@ -45,12 +46,23 @@ public class VisitorJava extends ASTVisitor {
 	public boolean visit(TypeDeclaration node) {
 		dependencies = new ArrayList<String>();
 		methods = new ArrayList<String>();
+		
+		String nome = node.getName().toString();
+		if(i==0) {
+			if(node.getName().toString().contains("$$")) {
+				nome = node.getName().toString()+"1";
+			}
+		}
 
 		Document doc = new Document(node.toString());
-		Dependency newDep = new Dependency(node.getName().toString(), dependencies, methods);
+		Dependency newDep = new Dependency(nome, dependencies, methods);
 		newDep.setNumberOfLines(doc.getNumberOfLines());
 		newDep.setAttributes(node.getFields().length);
 		newDep.setMethods(node.getMethods().length);
+
+		
+		
+		i++;
 
 		dp.add(newDep);
 		return true;
@@ -83,12 +95,12 @@ public class VisitorJava extends ASTVisitor {
 
 	@Override
 	public boolean visit(MethodInvocation node) {
-		if (!methods.contains(node.resolveMethodBinding().getName())) {
-			methods.add(node.resolveMethodBinding().getName());
+		if (!methods.contains(node.getName().toString())) {
+			methods.add(node.getName().toString());
 		}
-		if (!dependencies.contains(node.resolveMethodBinding().getDeclaringClass().getName())) {
-			dependencies.add(node.resolveMethodBinding().getDeclaringClass().getName());
-		}
+//		if (!dependencies.contains(node.resolveMethodBinding().getDeclaringClass().getName())) {
+//			dependencies.add(node.resolveMethodBinding().getDeclaringClass().getName());
+//		}
 		return true;
 	}
 
@@ -106,6 +118,13 @@ public class VisitorJava extends ASTVisitor {
 	}
 
 	public ArrayList<Dependency> getDependency() {
+		for(int i = 0; i < dp.size();i++) {
+			for(int j = 0; j < dp.get(i).getDependencias().size();j++) {
+				if(dp.get(i).getDependencias().get(j).contains("$$")) {
+					dp.get(i).getDependencias().remove(j);
+				}
+			}
+		}
 		return dp;
 	}
 

@@ -15,11 +15,7 @@ public class Dependency {
 		this.classe = classe;
 		this.dependencias = dependencias;
 		this.methodsCalled = methods;
-	}
-
-	public void setNewClassName(String name) {
-		this.classe = name;
-	}
+	} 
 
 	public ArrayList<String> getDependencias() {
 		return dependencias;
@@ -55,6 +51,10 @@ public class Dependency {
 
 	public void setMethods(int methods) {
 		this.methods = methods;
+	}
+
+	public void setClassName(String string) {
+		this.classe = string;
 	}
 
 }

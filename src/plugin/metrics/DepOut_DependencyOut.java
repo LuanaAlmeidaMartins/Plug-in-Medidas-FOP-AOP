@@ -1,6 +1,7 @@
 package plugin.metrics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -19,6 +20,7 @@ public class DepOut_DependencyOut extends Metrics {
 
 	@Override
 	public void calculate() {
+		System.out.println("\n\n DEPOUT");
 		// one feature
 		for (Entry<String, ArrayList<Dependency>> feature : code.entrySet()) {
 			ArrayList<String> useFeatures = new ArrayList<>();
@@ -42,6 +44,7 @@ public class DepOut_DependencyOut extends Metrics {
 					}
 				}
 			}
+			System.out.println(feature.getKey()+ "   "+ Arrays.toString(useFeatures.toArray()));
 			metricFeature.add(new MetricsInformation(feature.getKey(), useFeatures.size(), Node.LEAF));
 		}
 	}

@@ -23,7 +23,7 @@ public class XMLGenerator {
 	private IProject project;
 	private ArrayList<String> features = new ArrayList<String>();
 
-	public XMLGenerator(IProject iProject) {
+	public XMLGenerator(IProject iProject) throws CoreException {
 		this.project = iProject;
 		try {
 			readModelFile();
@@ -32,6 +32,7 @@ public class XMLGenerator {
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
+		iProject.refreshLocal(IResource.DEPTH_ZERO, null);
 	}
 
 	/**
@@ -141,6 +142,56 @@ public class XMLGenerator {
 			}
 
 		});
+	}
+
+	public void undo() {
+		try {
+			project.accept(new IResourceVisitor() {
+
+				@Override
+				public boolean visit(IResource resource) throws JavaModelException {
+					if (resource.getLocation().toString().endsWith("configs")) {
+						File fileConfig = new File(resource.getLocation().toString());
+						if (fileConfig.isDirectory()) {
+							File[] listOfFiles = fileConfig.listFiles();
+							for (File file : listOfFiles) {
+								if (file.getAbsolutePath().endsWith("xml")) {
+									file.delete();
+//									try {
+//										File newDiretory = new File(resource.getLocation().toString() + "/backup");
+//										if (newDiretory.exists()) {
+//											newDiretory.delete();
+//										}
+//										String currentPath = file.getPath().replace("/" + file.getName(), "");
+//										file.renameTo(new File(currentPath + "/backup", file.getName()));
+//										
+//									} catch (Exception e) {
+//										e.printStackTrace();
+//									}
+								}
+							}
+						}
+					}
+					if (resource.getLocation().toString().endsWith("backup")) {
+						File fileConfig = new File(resource.getLocation().toString());
+						if (fileConfig.isDirectory()) {
+							File[] listOfFiles = fileConfig.listFiles();
+							for (File file : listOfFiles) {
+								if (file.getAbsolutePath().endsWith("xml")) {
+								file.renameTo(new File(file.getPath().replaceAll("/backup", "")));
+								}
+							}
+						}
+								
+					}
+					return true;
+				}
+
+			});
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

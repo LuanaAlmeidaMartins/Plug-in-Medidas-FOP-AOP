@@ -1,5 +1,8 @@
 package plugin.persistences;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import plugin.metrics.Node;
 
@@ -182,6 +185,30 @@ public class MetricsView {
 	}
 
 	public ArrayList<ViewInformation> getView() {
+		 csvInfo();
 		return view;
+	}
+
+	private void csvInfo() {
+		for(int i = 0; i < view.size();i++) {
+		    try (PrintWriter writer = new PrintWriter(new File("/home/luana/Desenvolvimento/Saida/"
+		    		+ ""+view.get(i).getFeatureName()+".csv"))) {
+		    	StringBuilder sb = new StringBuilder();
+		    	sb.append("Features,Feature Oriented,Aspect Oriented,Aspectual Feature Modules\n");
+				for(int j = 0; j < view.get(i).getChildren().size();j++) {
+					sb.append(view.get(i).getChildren().get(j).getFeatureName()+","+
+								view.get(i).getChildren().get(j).getMetricJakarta()+","+
+								view.get(i).getChildren().get(j).getMetricAspectJ()+","+
+								view.get(i).getChildren().get(j).getMetricAfm()+"\n");
+					}
+				 writer.write(sb.toString());
+				} catch (FileNotFoundException e) {
+		      System.out.println(e.getMessage());
+		    }
+		    System.out.println("done!");
+
+		 
+		}
+		
 	}
 }

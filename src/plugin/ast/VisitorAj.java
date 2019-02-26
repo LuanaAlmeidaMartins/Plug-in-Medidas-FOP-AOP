@@ -103,6 +103,7 @@ public class VisitorAj extends AjASTVisitor {
 				}
 			}
 		}
+		
 		return true;
 	}
 
@@ -211,7 +212,6 @@ public class VisitorAj extends AjASTVisitor {
 
 	@Override
 	public boolean visit(ImportDeclaration node) {
-		imported = new ArrayList<String>();
 		String testString = node.getName().toString();
 		String[] parts = testString.split("\\.");
 		String lastWord = parts[parts.length - 1];
@@ -222,7 +222,6 @@ public class VisitorAj extends AjASTVisitor {
 	}
 
 	public ArrayList<Dependency> getDependency() {
-		imported = new ArrayList<>();
 		return dp;
 	}
 }

@@ -36,7 +36,6 @@ public class SampleView extends ViewPart {
         viewer.getTree().setHeaderVisible(true);
 //      viewer.getTree().setLinesVisible(true);
         
-        
         TreeViewerColumn mainColumn = createTableViewerColumn(titles[0], bounds[0], 0);
         mainColumn.setLabelProvider(new ColumnLabelProvider(){
         	@Override
