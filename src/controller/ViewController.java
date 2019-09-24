@@ -5,8 +5,8 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-import information.Node;
-import information.ViewInformation;
+import model.information.Node;
+import model.information.ViewInformation;
 
 // Tutorial 
 // http://www.vogella.com/tutorials/EclipseJFaceTree/article.html#prerequisites

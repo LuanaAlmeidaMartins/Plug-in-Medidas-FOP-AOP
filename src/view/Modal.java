@@ -4,7 +4,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Shell;
 
 import controller.ModalController;
-import preprocessing.ExtensionFile;
+import model.preprocessing.ExtensionFile;
 
 public class Modal extends Wizard {
 

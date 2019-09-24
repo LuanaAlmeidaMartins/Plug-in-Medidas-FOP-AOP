@@ -19,7 +19,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import controller.StartController;
 import controller.ViewController;
-import information.ViewInformation;
+import model.information.ViewInformation;
 
 public class View extends ViewPart {
 

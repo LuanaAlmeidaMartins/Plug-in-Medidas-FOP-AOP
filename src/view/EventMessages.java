@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import javafx.scene.control.ProgressBar;
-import preprocessing.ExtensionFile;
+import model.preprocessing.ExtensionFile;
 
 public class EventMessages {
 

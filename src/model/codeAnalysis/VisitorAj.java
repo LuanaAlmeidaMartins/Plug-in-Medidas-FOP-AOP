@@ -1,4 +1,4 @@
-package codeAnalysis;
+package model.codeAnalysis;
 
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import org.aspectj.org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.aspectj.org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jface.text.Document;
 
-import information.Dependency;
+import model.information.Dependency;
 
 public class VisitorAj extends AjASTVisitor {
 

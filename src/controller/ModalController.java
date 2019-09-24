@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import preprocessing.ExtensionFile;
+import model.preprocessing.ExtensionFile;
 
 public class ModalController extends WizardPage {
 

@@ -1,14 +1,14 @@
-package metrics;
+package model.metrics;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import information.Dependency;
-import information.MetricsInformation;
-import information.Node;
-import information.Propagation;
+import model.information.Dependency;
+import model.information.MetricsInformation;
+import model.information.Node;
+import model.information.Propagation;
 
 public class NSO_NumberOfSharedOperations extends Metrics {
 

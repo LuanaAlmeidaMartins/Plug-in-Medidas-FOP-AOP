@@ -1,4 +1,4 @@
-package preprocessing;
+package model.preprocessing;
 
 import java.io.File;
 import java.util.ArrayList;

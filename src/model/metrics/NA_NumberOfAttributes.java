@@ -1,22 +1,23 @@
-package metrics;
+package model.metrics;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import information.Dependency;
-import information.MetricsInformation;
-import information.Node;
-import information.Propagation;
+import model.information.Dependency;
+import model.information.MetricsInformation;
+import model.information.Node;
+import model.information.Propagation;
 
-public class LOC_LinesOfCode extends Metrics {
+public class NA_NumberOfAttributes extends Metrics {
 
-	public LOC_LinesOfCode(HashMap<String, ArrayList<Dependency>> code) {
+	public NA_NumberOfAttributes(HashMap<String, ArrayList<Dependency>> code) {
 		super(code);
 		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();
-		metricSystem.add(new MetricsInformation("Lines of Code (LOC)", metricFeature, Node.NON_LEAF, Propagation.SUM));
+		metricSystem.add(
+				new MetricsInformation("Number of Attributes (NA)", metricFeature, Node.NON_LEAF, Propagation.SUM));
 	}
 
 	@Override
@@ -25,7 +26,7 @@ public class LOC_LinesOfCode extends Metrics {
 			metricComponent = new ArrayList<MetricsInformation>();
 			for (int i = 0; i < feature.getValue().size(); i++) {
 				metricComponent.add(new MetricsInformation(feature.getValue().get(i).getClasseName(),
-						feature.getValue().get(i).getNumberOfLines(), Node.LEAF));
+						feature.getValue().get(i).getAttributes(), Node.LEAF));
 
 			}
 			metricFeature

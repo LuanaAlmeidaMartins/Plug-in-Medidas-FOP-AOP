@@ -1,10 +1,10 @@
-package preprocessing;
+package model.preprocessing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import information.Dependency;
-import information.FileInformation;
+import model.information.Dependency;
+import model.information.FileInformation;
 
 public class CodeFragments {
 

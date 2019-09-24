@@ -1,32 +1,31 @@
-package metrics;
-
+package model.metrics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import information.Dependency;
-import information.MetricsInformation;
-import information.Node;
-import information.Propagation;
+import model.information.Dependency;
+import model.information.MetricsInformation;
+import model.information.Node;
+import model.information.Propagation;
 
-public class LCC_LackOfConcernBasedCohesion extends Metrics {
+public class DepOut_DependencyOut extends Metrics {
 
-	public LCC_LackOfConcernBasedCohesion(HashMap<String, ArrayList<Dependency>> codeFragments) {
-		super(codeFragments);
+	public DepOut_DependencyOut(HashMap<String, ArrayList<Dependency>> code) {
+		super(code);
 		metricFeature = new ArrayList<MetricsInformation>();
 		calculate();
-
-		metricSystem.add(new MetricsInformation("Lack of Concern-based Cohesion (LCC)", metricFeature, Node.NON_LEAF,
-				Propagation.AVERAGE));
+		metricSystem.add(
+				new MetricsInformation("Dependency Out (DepOut)", metricFeature, Node.NON_LEAF, Propagation.AVERAGE));
 	}
 
+	@Override
 	public void calculate() {
-
+//		System.out.println("\n\n DEPOUT");
 		// one feature
 		for (Entry<String, ArrayList<Dependency>> feature : code.entrySet()) {
 			ArrayList<String> useFeatures = new ArrayList<>();
-			useFeatures.add(feature.getKey());
+
 			// check if it uses components from other features
 			for (Entry<String, ArrayList<Dependency>> feature2 : code.entrySet()) {
 				if (!feature.getKey().equals(feature2.getKey())) {
@@ -46,6 +45,8 @@ public class LCC_LackOfConcernBasedCohesion extends Metrics {
 					}
 				}
 			}
+			// System.out.println(feature.getKey()+ " "+
+			// Arrays.toString(useFeatures.toArray()));
 			metricFeature.add(new MetricsInformation(feature.getKey(), useFeatures.size(), Node.LEAF));
 		}
 	}

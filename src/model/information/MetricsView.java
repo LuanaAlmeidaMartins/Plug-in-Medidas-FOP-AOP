@@ -1,4 +1,4 @@
-package information;
+package model.information;
 
 import java.io.File;
 import java.io.FileNotFoundException;

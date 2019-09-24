@@ -1,4 +1,4 @@
-package preprocessing;
+package model.preprocessing;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 
-import information.FileInformation;
+import model.information.FileInformation;
 
 /**
  * The measures are given at feature level, so class identifies the components

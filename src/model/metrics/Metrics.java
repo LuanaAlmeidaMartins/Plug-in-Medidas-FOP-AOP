@@ -1,11 +1,11 @@
-package metrics;
+package model.metrics;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import information.Dependency;
-import information.MetricsInformation;
+import model.information.Dependency;
+import model.information.MetricsInformation;
 
 public abstract class Metrics {
 
